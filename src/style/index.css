@@ -1,0 +1,13 @@
+body {
+  background-color: #ebeef3;
+  margin: 0;
+  bottom: 0;
+}
+
+:where(.css-dev-only-do-not-override-dkbvqv).ant-pagination
+  .ant-pagination-item-active
+  a {
+  background-color: #1890ff;
+  cursor: pointer;
+  color: #ffffff;
+}

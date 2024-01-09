@@ -1,0 +1,35 @@
+.header {
+  height: 80px;
+  width: 100%;
+  background-color: #ffffff;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  &__container {
+    display: flex;
+    align-items: center;
+    margin-left: 22px;
+    margin-right: 22px;
+    .sign__in {
+      width: 84px;
+      margin-right: 19px;
+    }
+    .sign__up {
+      width: 109px;
+      height: 51px;
+      justify-content: center;
+      border-radius: 5px;
+      border: 1px solid var(--success-color, #52c41a);
+      color: #52c41a;
+    }
+    &__btn {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      border: none;
+      background-color: #ffffff;
+      height: 35px;
+      cursor: pointer;
+    }
+  }
+}

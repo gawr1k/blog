@@ -1,0 +1,101 @@
+.post__container {
+  width: 65%;
+  border-radius: 5px;
+  min-height: 140px;
+  background-color: #ffffff;
+  margin-left: 17%;
+  margin-right: 17%;
+  margin-top: 26px;
+  margin-bottom: 26px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 19px;
+  padding-right: 14px;
+  overflow: hidden;
+  .tag {
+    padding-left: 5px;
+    padding-right: 6px;
+    padding-top: 2px;
+    padding-bottom: 3px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    border: 1px solid var(--text-color-secondary, rgba(0, 0, 0, 0.5));
+  }
+  .text {
+    margin-top: 7px;
+    margin-bottom: 0;
+    height: 75px;
+    flex-shrink: 0;
+    position: absolute;
+    width: 65%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .title__container {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+    margin-bottom: 6px;
+    .title {
+      font-size: 20px;
+      color: var(--info-color, #1890ff);
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 28px;
+      width: 160px;
+      height: 28px;
+      align-items: center;
+      display: flex;
+      margin: 0;
+    }
+    .like__container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 28px;
+      .heart__count {
+        margin: 0;
+        margin-left: 5px;
+        color: var(--text-color, rgba(0, 0, 0, 0.75));
+        font-family: Inter;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22px;
+      }
+    }
+  }
+  .container__bio {
+    display: flex;
+    justify-content: space-between;
+    height: 46px;
+    .container__name__data {
+      .name {
+        margin: 0;
+        white-space: nowrap;
+        height: 28px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+      .data {
+        white-space: nowrap;
+        color: var(--text-color-secondary, rgba(0, 0, 0, 0.5));
+        margin: 0;
+        height: 22px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+    }
+    .avatar {
+      width: 46px;
+      height: 46px;
+      margin-left: 12px;
+    }
+  }
+}
