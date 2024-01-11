@@ -11,3 +11,7 @@ body {
   cursor: pointer;
   color: #ffffff;
 }
+
+.ant-select {
+  display: none;
+}

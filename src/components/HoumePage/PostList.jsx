@@ -1,4 +1,4 @@
-import { Pagination } from 'antd'
+import { Pagination, Spin } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -17,19 +17,25 @@ export default function PostList() {
   }, [currentPage, dispatch])
 
   return (
-    <>
-      {posts.map((post) => (
-        <Post key={`${post.slug}-${post.createdAt}`} post={post} />
-      ))}
-      <div className={style.container__pagination}>
-        <Pagination
-          defaultCurrent={1}
-          total={50}
-          onChange={(page) => {
-            setCurrentPage(page)
-          }}
-        />
-      </div>
-    </>
+    <div>
+      {posts.articles ? (
+        <>
+          {posts.articles.map((post) => (
+            <Post key={`${post.slug}-${post.createdAt}`} post={post} />
+          ))}
+          <div className={style.container__pagination}>
+            <Pagination
+              current={currentPage}
+              total={posts.articlesCount}
+              onChange={(page) => setCurrentPage(page)}
+            />
+          </div>
+        </>
+      ) : (
+        <Spin tip="Loading" size="large">
+          <div className="content" />
+        </Spin>
+      )}
+    </div>
   )
 }

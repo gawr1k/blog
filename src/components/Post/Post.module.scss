@@ -1,3 +1,5 @@
+@import '../../assets/fonts/Inter/font.css';
+
 .post__container {
   width: 65%;
   border-radius: 5px;
@@ -19,18 +21,27 @@
     padding-right: 6px;
     padding-top: 2px;
     padding-bottom: 3px;
+    margin-right: 8px;
     justify-content: center;
     align-items: center;
     border-radius: 2px;
     border: 1px solid var(--text-color-secondary, rgba(0, 0, 0, 0.5));
+    color: var(--text-color, rgba(0, 0, 0, 0.75));
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
   .text {
+    font-family: 'Inter', sans-serif;
     margin-top: 7px;
     margin-bottom: 0;
     height: 75px;
     flex-shrink: 0;
     position: absolute;
     width: 65%;
+    max-width: 700px;
     text-overflow: ellipsis;
     overflow: hidden;
   }
@@ -42,15 +53,20 @@
     .title {
       font-size: 20px;
       color: var(--info-color, #1890ff);
-      font-family: Inter;
+      font-family: 'Inter', sans-serif;
       font-style: normal;
       font-weight: 400;
       line-height: 28px;
-      width: 160px;
+      max-width: 160px;
       height: 28px;
       align-items: center;
       display: flex;
       margin: 0;
+      margin-right: 13px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: block;
     }
     .like__container {
       display: flex;
@@ -61,7 +77,7 @@
         margin: 0;
         margin-left: 5px;
         color: var(--text-color, rgba(0, 0, 0, 0.75));
-        font-family: Inter;
+        font-family: 'Inter', sans-serif;
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -75,12 +91,21 @@
     height: 46px;
     .container__name__data {
       .name {
+        color: var(--heading-color, rgba(0, 0, 0, 0.85));
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 28px;
+        font-family: 'Inter', sans-serif;
         margin: 0;
         white-space: nowrap;
         height: 28px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       .data {
         white-space: nowrap;
@@ -90,12 +115,18 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        font-family: Inter;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22px;
       }
     }
     .avatar {
       width: 46px;
       height: 46px;
       margin-left: 12px;
+      border-radius: 23px;
     }
   }
 }

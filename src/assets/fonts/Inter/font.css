@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'Inter UI';
+  src:
+    local('Inter UI'),
+    url('./Inter-VariableFont_slnt\,wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

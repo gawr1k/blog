@@ -6,8 +6,7 @@ import getArticles from '../../api/api.js'
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (page) => {
   const response = await getArticles(page)
-  console.log(response.articles)
-  return response.articles
+  return response
 })
 
 const postsSlice = createSlice({
@@ -41,4 +40,5 @@ const postsSlice = createSlice({
 
 export const { setPosts } = postsSlice.actions
 export const selectPosts = (state) => state.posts.posts
+export const isLoadingPosts = (state) => state.posts.loading
 export default postsSlice.reducer

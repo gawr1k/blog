@@ -1,11 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 import like from '../../assets/like__icon.svg'
-import avatar from '../../assets/avatar_blog.svg'
 
 import style from './Post.module.scss'
 
 export default function Post({ post }) {
-  console.log(post)
+  // console.log(post)
   return (
     <div className={style.post__container}>
       <div>
@@ -32,7 +31,11 @@ export default function Post({ post }) {
             {new Date(post.createdAt).toLocaleDateString()}
           </h5>
         </div>
-        <img className={style.avatar} src={avatar} alt="" />
+        <img
+          className={style.avatar}
+          src={post.author.image}
+          alt="Author Avatar"
+        />
       </div>
     </div>
   )

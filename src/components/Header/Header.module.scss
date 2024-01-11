@@ -1,3 +1,5 @@
+@import '../../assets/fonts/Inter/font.css';
+
 .header {
   height: 80px;
   width: 100%;
@@ -26,6 +28,13 @@
       padding: 0;
       display: flex;
       align-items: center;
+      color: var(--heading-color, rgba(0, 0, 0, 0.85));
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 28px;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
       border: none;
       background-color: #ffffff;
       height: 35px;
