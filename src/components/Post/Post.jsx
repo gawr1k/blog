@@ -1,23 +1,25 @@
-/* eslint-disable react/no-array-index-key */
+import { Link } from 'react-router-dom'
+
 import like from '../../assets/like__icon.svg'
 
 import style from './Post.module.scss'
 
 export default function Post({ post }) {
-  // console.log(post)
   return (
     <div className={style.post__container}>
       <div>
         <div>
           <div className={style.title__container}>
-            <h3 className={style.title}>{post.title}</h3>
+            <Link to={`/articles/post/${post.slug}`} className={style.title}>
+              {post.title}
+            </Link>
             <div className={style.like__container}>
               <img src={like} alt="like" />
               <h5 className={style.heart__count}>{post.favoritesCount}</h5>
             </div>
           </div>
-          {post.tagList.map((tag, index) => (
-            <span key={index} className={style.tag}>
+          {post.tagList.map((tag) => (
+            <span key={tag} className={style.tag}>
               {tag}
             </span>
           ))}
@@ -28,7 +30,11 @@ export default function Post({ post }) {
         <div className={style.container__name__data}>
           <h3 className={style.name}>{post.author.username}</h3>
           <h5 className={style.data}>
-            {new Date(post.createdAt).toLocaleDateString()}
+            {new Intl.DateTimeFormat('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }).format(new Date(post.createdAt))}
           </h5>
         </div>
         <img

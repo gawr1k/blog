@@ -16,11 +16,7 @@ const postsSlice = createSlice({
     status: null,
     error: null,
   },
-  reducers: {
-    setPosts: (state, action) => {
-      state.posts = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchPosts.pending, (state) => {
@@ -40,5 +36,4 @@ const postsSlice = createSlice({
 
 export const { setPosts } = postsSlice.actions
 export const selectPosts = (state) => state.posts.posts
-export const isLoadingPosts = (state) => state.posts.loading
 export default postsSlice.reducer
