@@ -1,14 +1,15 @@
 import { Route, Routes } from 'react-router-dom'
 
-import Header from '../Header/Header'
-import PostList from '../HoumePage/PostList'
-import Slug from '../Slug/Slug'
+import Header from '../Header/Header.jsx'
+import PostList from '../HoumePage/PostList.jsx'
+import Slug from '../Slug/Slug.jsx'
 
 function App() {
   return (
     <>
       <Header />
       <Routes>
+        <Route path="/" element={<PostList />} />
         <Route path="/articles" element={<PostList />} />
         <Route path="/articles/post/:slug" element={<Slug />} />
       </Routes>

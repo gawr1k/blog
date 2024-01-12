@@ -22,6 +22,7 @@
   },
   "plugins": ["react", "prettier", "import"],
   "rules": {
+    "import/extensions": ["error", "always", { "ignorePackages": true }],
     "no-param-reassign": ["error", { "props": true }],
     "react/jsx-no-constructed-context-values": "off",
     "indent": ["error", 2],
@@ -36,6 +37,7 @@
     "implicit-arrow-linebreak": "off",
     "import/no-unresolved": [2, { "caseSensitive": false }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/no-array-index-key": "off",
     "import/order": [
       2,
       {

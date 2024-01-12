@@ -18,12 +18,12 @@ export default function Post({ post }) {
               <h5 className={style.heart__count}>{post.favoritesCount}</h5>
             </div>
           </div>
-          {post.tagList.map((tag) => (
-            <span key={tag} className={style.tag}>
+          {post.tagList.map((tag, index) => (
+            <span key={`tag-${index}`} className={style.tag}>
               {tag}
             </span>
           ))}
-          <p className={style.text}>{post.body}</p>
+          <p className={style.text}>{post.description}</p>
         </div>
       </div>
       <div className={style.container__bio}>

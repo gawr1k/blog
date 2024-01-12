@@ -1,6 +1,6 @@
 const BASE_URL = 'https://blog.kata.academy/api/'
 
-export default async function getArticles(page = 1, limit = 5) {
+export async function getArticles(page = 1, limit = 5) {
   const offset = (page - 1) * limit
   const url = new URL('articles', BASE_URL)
   url.searchParams.set('limit', limit)
@@ -8,6 +8,16 @@ export default async function getArticles(page = 1, limit = 5) {
   const response = await fetch(url)
   if (!response.ok) {
     throw new Error(`Error fetching articles: ${response.status}`)
+  }
+  const data = await response.json()
+  return data
+}
+
+export async function getArticle(slug) {
+  const url = new URL(`articles/${slug}`, BASE_URL)
+  const response = await fetch(url)
+  if (!response.ok) {
+    throw new Error(`Error fetching article: ${response.status}`)
   }
   const data = await response.json()
   return data
