@@ -15,18 +15,20 @@ export default function Header() {
         </Link>
       </div>
       <div className={style.header__container}>
-        <button
+        <Link
+          to="/sign-in"
           className={`${style.header__container__btn} ${style.sign__in}`}
           type="button"
         >
           Sign In
-        </button>
-        <button
+        </Link>
+        <Link
+          to="/sign-up"
           className={`${style.header__container__btn} ${style.sign__up}`}
           type="button"
         >
           Sign Up
-        </button>
+        </Link>
       </div>
     </header>
   )
