@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-useless-escape */
-/* eslint-disable react/button-has-type */
-/* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { Button } from 'antd'
@@ -25,7 +21,10 @@ function SignIn() {
         Email address
         <input
           className={errors.email ? style.input__error : style.input}
-          {...register('email', { required: true, pattern: /valid email/ })}
+          {...register('email', {
+            required: true,
+            pattern: /valid email/,
+          })}
           placeholder="Email address"
         />
         {errors.email && <p className={style.error}>Неверный email</p>}
@@ -45,7 +44,11 @@ function SignIn() {
           <p className={style.error}>Поле обязательно к заполнению</p>
         )}
       </label>
-      <Button className={style.btn} type="primary">
+      <Button
+        className={style.btn}
+        type="primary"
+        onClick={handleSubmit(onSubmit)}
+      >
         Login
       </Button>
       <h5 className={style.link}>

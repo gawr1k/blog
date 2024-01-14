@@ -38,6 +38,7 @@
     "import/no-unresolved": [2, { "caseSensitive": false }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/no-array-index-key": "off",
+    "react/jsx-props-no-spreading": "off",
     "import/order": [
       2,
       {
