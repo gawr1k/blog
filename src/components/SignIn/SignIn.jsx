@@ -1,21 +1,29 @@
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'antd'
+import { useDispatch } from 'react-redux'
+
+import { loginUser } from '../../store/slices/userSlice.js'
 
 import style from './SignIn.module.scss'
 
 function SignIn() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
+
   const onSubmit = (data) => {
-    console.log(data)
+    dispatch(loginUser({ email: data.email, password: data.password }))
+    navigate('/')
   }
 
   return (
-    <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={style.form}>
       <h1 className={style.title}>Sign In</h1>
       <label className={style.label} htmlFor="email">
         Email address
@@ -23,7 +31,7 @@ function SignIn() {
           className={errors.email ? style.input__error : style.input}
           {...register('email', {
             required: true,
-            pattern: /valid email/,
+            pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
           })}
           placeholder="Email address"
         />
@@ -33,7 +41,7 @@ function SignIn() {
       <label className={style.label} htmlFor="password">
         Password
         <input
-          className={errors.email ? style.input__error : style.input}
+          className={errors.password ? style.input__error : style.input}
           {...register('password', {
             required: true,
           })}

@@ -1,33 +1,53 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+
+import { postLoginUser } from '../../api/api.js'
 
 const initialState = {
-  email: null,
-  token: null,
-  id: null,
+  user: {
+    email: null,
+    token: null,
+    username: null,
+  },
+  status: 'idle',
+  error: null,
 }
+
+export const loginUser = createAsyncThunk(
+  'user/login',
+  async ({ email, password }) => {
+    const user = await postLoginUser(email, password)
+    return user
+  }
+)
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    setUsers(state, action) {
-      return {
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => ({
         ...state,
-        email: action.payload.email,
-        token: action.payload.token,
-        id: action.payload.id,
-      }
-    },
-    removeUser(state) {
-      return {
+        status: 'loading',
+        error: null,
+      }))
+      .addCase(loginUser.fulfilled, (state, action) => ({
         ...state,
-        email: null,
-        token: null,
-        id: null,
-      }
-    },
+        status: 'succeeded',
+        user: action.payload.user,
+      }))
+      .addCase(loginUser.rejected, (state, action) => {
+        const { status, data } = action.payload.response // Получаем статус и данные из ответа
+        return {
+          ...state,
+          status: 'failed',
+          error: {
+            status,
+            message: data.message, // Передаем сообщение об ошибке из ответа
+          },
+        }
+      })
   },
 })
 
-export const { setUsers, removeUser } = userSlice.actions
 export default userSlice.reducer
