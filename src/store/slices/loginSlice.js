@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { postLoginUser } from '../../api/api.js'
+import { postLoginUser, postRegisterUser } from '../../api/api.js'
 
 const initialState = {
   user: {
@@ -11,6 +11,7 @@ const initialState = {
   status: 'idle',
   error: null,
 }
+
 export const loginUser = createAsyncThunk(
   'user/login',
   async ({ email, password }) => {
@@ -18,7 +19,16 @@ export const loginUser = createAsyncThunk(
     return user
   }
 )
-const userSlice = createSlice({
+
+export const registerUser = createAsyncThunk(
+  'auth/registerUser',
+  async (userData) => {
+    const response = await postRegisterUser(userData)
+    return response.user
+  }
+)
+
+const loginSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -55,9 +65,25 @@ const userSlice = createSlice({
           },
         }
       })
+      .addCase(registerUser.pending, (state) => ({
+        ...state,
+        status: 'loading',
+      }))
+
+      .addCase(registerUser.fulfilled, (state, action) => ({
+        ...state,
+        status: 'succeeded',
+        user: action.payload,
+      }))
+
+      .addCase(registerUser.rejected, (state, action) => ({
+        ...state,
+        status: 'failed',
+        error: action.error.message,
+      }))
   },
 })
 
 export const selectToken = (state) => state.user.user.token
-export const { logoutUser } = userSlice.actions
-export default userSlice.reducer
+export const { logoutUser } = loginSlice.actions
+export default loginSlice.reducer

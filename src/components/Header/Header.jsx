@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import avatar from '../../assets/avatar_blog.svg'
 import useAuth from '../../hooks/use-auth.js'
-import { logoutUser } from '../../store/slices/userSlice.js'
+import { logoutUser } from '../../store/slices/loginSlice.js'
 
 import style from './Header.module.scss'
 

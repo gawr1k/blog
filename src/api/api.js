@@ -44,7 +44,6 @@ export async function postLoginUser(email, password) {
   return data
 }
 
-// eslint-disable-next-line object-curly-newline
 export async function putUserProfile(userData) {
   const url = new URL('user', BASE_URL)
   const response = await fetch(url, {
@@ -67,4 +66,23 @@ export async function putUserProfile(userData) {
   }
   const responseData = await response.json()
   return responseData
+}
+
+export async function postRegisterUser(userData) {
+  const url = new URL('users', BASE_URL)
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ user: userData }),
+  })
+  if (!response.ok) {
+    console.log(response)
+    const errorData = await response.json()
+    throw new Error(errorData.errors.body[0])
+  }
+  const data = await response.json()
+  console.log(data)
+  return data
 }

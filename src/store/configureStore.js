@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import postsReducer from './slices/postsSlice.js'
 import articleSlice from './slices/articleSlice.js'
-import userSlice from './slices/userSlice.js'
+import loginSlice from './slices/loginSlice.js'
+import profileSlice from './slices/profileSlice.js'
 
 export default configureStore({
   reducer: {
     posts: postsReducer,
     article: articleSlice,
-    user: userSlice,
+    user: loginSlice,
+    profile: profileSlice,
   },
 })

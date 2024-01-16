@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import { putUserProfile } from '../../api/api.js'
@@ -20,19 +19,25 @@ export const editProfile = createAsyncThunk(
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
+
   reducers: {},
-  extraReducers: {
-    [editProfile.pending]: (state) => {
-      state.status = 'loading'
-    },
-    [editProfile.fulfilled]: (state, action) => {
-      state.status = 'succeeded'
-      state.user = action.payload
-    },
-    [editProfile.rejected]: (state, action) => {
-      state.status = 'failed'
-      state.error = action.error.message
-    },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(editProfile.pending, (state) => ({
+        ...state,
+        status: 'loading',
+      }))
+      .addCase(editProfile.fulfilled, (state, action) => ({
+        ...state,
+        status: 'succeeded',
+        user: action.payload,
+      }))
+      .addCase(editProfile.rejected, (state, action) => ({
+        ...state,
+        status: 'failed',
+        error: action.error.message,
+      }))
   },
 })
 

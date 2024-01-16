@@ -2,7 +2,7 @@
 import { Route, Routes } from 'react-router-dom'
 
 import Header from '../Header/Header.jsx'
-import PostList from '../HoumePage/PostList.jsx'
+import PostList from '../PostList/PostList.jsx'
 import Slug from '../Slug/Slug.jsx'
 import SignIn from '../SignIn/SignIn.jsx'
 import SignUp from '../SignUp/SignUp.jsx'

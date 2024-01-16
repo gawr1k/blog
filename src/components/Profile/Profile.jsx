@@ -17,7 +17,6 @@ function Profile() {
   } = useForm()
   const onSubmit = (data) => {
     dispatch(editProfile({ ...data, token }))
-    // console.log({ ...data, token })
   }
 
   return (
