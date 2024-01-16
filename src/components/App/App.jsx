@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import { Route, Routes } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 import Header from '../Header/Header.jsx'
 import PostList from '../PostList/PostList.jsx'
@@ -9,8 +11,18 @@ import SignUp from '../SignUp/SignUp.jsx'
 import PublicRoute from '../../hooks/PublicRoute.js'
 import PrivateRoute from '../../hooks/PrivateRoute.js'
 import Profile from '../Profile/Profile.jsx'
+import { setLoginUser } from '../../store/slices/loginSlice.js'
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user')
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser)
+      dispatch(setLoginUser(parsedUser))
+    }
+  }, [])
   return (
     <>
       <Header />

@@ -1,5 +1,5 @@
 import { useForm, Controller } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button, Checkbox } from 'antd'
 import { useDispatch } from 'react-redux'
 
@@ -8,7 +8,6 @@ import { registerUser } from '../../store/slices/loginSlice.js'
 import style from './SignUp.module.scss'
 
 function SignUp() {
-  const navigate = useNavigate()
   console.log('Render PostList')
   const dispatch = useDispatch()
 
@@ -21,7 +20,6 @@ function SignUp() {
   const onSubmit = (data) => {
     console.log(data)
     dispatch(registerUser(data))
-    navigate('/')
   }
 
   return (
