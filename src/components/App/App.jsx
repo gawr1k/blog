@@ -6,7 +6,9 @@ import PostList from '../HoumePage/PostList.jsx'
 import Slug from '../Slug/Slug.jsx'
 import SignIn from '../SignIn/SignIn.jsx'
 import SignUp from '../SignUp/SignUp.jsx'
-import PrivateRoute from '../PrivateRoute.js'
+import PublicRoute from '../../hooks/PublicRoute.js'
+import PrivateRoute from '../../hooks/PrivateRoute.js'
+import Profile from '../Profile/Profile.jsx'
 
 function App() {
   return (
@@ -19,16 +21,24 @@ function App() {
         <Route
           path="/sign-in"
           element={
-            <PrivateRoute>
+            <PublicRoute>
               <SignIn />
-            </PrivateRoute>
+            </PublicRoute>
           }
         />
         <Route
           path="/sign-up"
           element={
-            <PrivateRoute>
+            <PublicRoute>
               <SignUp />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
             </PrivateRoute>
           }
         />

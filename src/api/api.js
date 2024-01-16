@@ -1,4 +1,3 @@
-/* eslint-disable default-param-last */
 const BASE_URL = 'https://blog.kata.academy/api/'
 
 export async function getArticles(page = 1, limit = 5) {
@@ -24,10 +23,7 @@ export async function getArticle(slug) {
   return data
 }
 
-export async function postLoginUser(
-  email = 'gasimmurasov@gmail.com',
-  password = 'gasimmurasov@gmail.com'
-) {
+export async function postLoginUser(email, password) {
   const url = new URL('users/login', BASE_URL)
   const response = await fetch(url, {
     method: 'POST',
@@ -46,4 +42,29 @@ export async function postLoginUser(
   }
   const data = await response.json()
   return data
+}
+
+// eslint-disable-next-line object-curly-newline
+export async function putUserProfile(userData) {
+  const url = new URL('user', BASE_URL)
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userData.token}`,
+    },
+    body: JSON.stringify({
+      user: {
+        email: userData.email,
+        username: userData.username,
+        password: userData.password,
+        avatarURL: userData.avatarURL,
+      },
+    }),
+  })
+  if (!response.ok) {
+    throw new Error(`Editing profile failed: ${response.status}`)
+  }
+  const responseData = await response.json()
+  return responseData
 }

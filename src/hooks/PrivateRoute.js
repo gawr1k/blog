@@ -1,10 +1,10 @@
 import { Navigate } from 'react-router-dom'
 
-import useAuth from '../hooks/use-auth.js'
+import useAuth from './use-auth.js'
 
 function PrivateRoute({ children }) {
   const { isAuth } = useAuth()
-  return isAuth ? <Navigate to="/articles" /> : children
+  return isAuth ? children : <Navigate to="/articles" />
 }
 
 export default PrivateRoute
