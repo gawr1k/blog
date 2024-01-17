@@ -49,3 +49,50 @@
     }
   }
 }
+
+.name__blog:hover {
+  color: #1890ff;
+}
+
+.create_article {
+  width: 112px;
+  height: 31px;
+  justify-content: center;
+  border-radius: 5px;
+  border: 1px solid var(--success-color, #52c41a);
+  color: #52c41a;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.logout {
+  margin-left: 27px;
+  border: 1px solid var(--text-color, rgba(0, 0, 0, 0.75));
+  color: rgba(0, 0, 0, 0.75);
+  width: 109px;
+  height: 51px;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+}
+.username {
+  margin-left: 27px;
+}
+.username_span {
+  margin-right: 13px;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.header__container__btn:hover {
+  color: #1890ff;
+}

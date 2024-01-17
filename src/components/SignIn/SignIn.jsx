@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button } from 'antd'
 import { useDispatch } from 'react-redux'
 
@@ -8,7 +8,6 @@ import { loginUser } from '../../store/slices/loginSlice.js'
 import style from './SignIn.module.scss'
 
 function SignIn() {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const {
@@ -19,7 +18,6 @@ function SignIn() {
 
   const onSubmit = (data) => {
     dispatch(loginUser({ email: data.email, password: data.password }))
-    navigate('/')
   }
 
   return (

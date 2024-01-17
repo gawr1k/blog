@@ -17,6 +17,7 @@ export const loginUser = createAsyncThunk(
   'user/login',
   async ({ email, password }) => {
     const user = await postLoginUser(email, password)
+    console.log(user)
     return user
   }
 )
@@ -25,7 +26,8 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async (userData) => {
     const response = await postRegisterUser(userData)
-    return response.user
+    console.log(response)
+    return response
   }
 )
 
@@ -59,6 +61,8 @@ const loginSlice = createSlice({
       }))
       .addCase(loginUser.fulfilled, (state, action) => {
         const { user } = action.payload
+        console.log(action.payload)
+        console.log(JSON.stringify(user))
         localStorage.setItem('user', JSON.stringify(user))
         return {
           ...state,
@@ -67,13 +71,13 @@ const loginSlice = createSlice({
         }
       })
       .addCase(loginUser.rejected, (state, action) => {
-        const { status, data } = action.payload.response // Получаем статус и данные из ответа
+        const { status, data } = action.payload.response
         return {
           ...state,
           status: 'failed',
           error: {
             status,
-            message: data.message, // Передаем сообщение об ошибке из ответа
+            message: data.message,
           },
         }
       })
@@ -83,6 +87,8 @@ const loginSlice = createSlice({
       }))
       .addCase(registerUser.fulfilled, (state, action) => {
         const { user } = action.payload
+        console.log(action.payload)
+        console.log(JSON.stringify())
         localStorage.setItem('user', JSON.stringify(user))
         return {
           ...state,

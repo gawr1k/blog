@@ -62,9 +62,13 @@ export async function putUserProfile(userData) {
     }),
   })
   if (!response.ok) {
+    console.log(response)
+
     throw new Error(`Editing profile failed: ${response.status}`)
   }
   const responseData = await response.json()
+  console.log(responseData)
+
   return responseData
 }
 
@@ -85,4 +89,31 @@ export async function postRegisterUser(userData) {
   const data = await response.json()
   console.log(data)
   return data
+}
+
+export async function postCreateArticle(jwtToken, articleData) {
+  const url = new URL('articles', BASE_URL)
+
+  const headers = {
+    Authorization: `Bearer ${jwtToken}`,
+    'Content-Type': 'application/json',
+  }
+  const requestOptions = {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ article: articleData }),
+  }
+  try {
+    const response = await fetch(url, requestOptions)
+    if (!response.ok) {
+      console.log(response)
+      throw new Error(`createArticle Error: ${response.status}`)
+    }
+    const responseData = await response.json()
+    console.log(responseData)
+    return responseData.article
+  } catch (error) {
+    console.error('Network error:', error.message)
+    throw error
+  }
 }

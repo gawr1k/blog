@@ -8,7 +8,6 @@ import { registerUser } from '../../store/slices/loginSlice.js'
 import style from './SignUp.module.scss'
 
 function SignUp() {
-  console.log('Render PostList')
   const dispatch = useDispatch()
 
   const {

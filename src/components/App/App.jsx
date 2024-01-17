@@ -11,6 +11,7 @@ import SignUp from '../SignUp/SignUp.jsx'
 import PublicRoute from '../../hooks/PublicRoute.js'
 import PrivateRoute from '../../hooks/PrivateRoute.js'
 import Profile from '../Profile/Profile.jsx'
+import NewArticle from '../NewArticle/NewArticle.jsx'
 import { setLoginUser } from '../../store/slices/loginSlice.js'
 
 function App() {
@@ -18,11 +19,18 @@ function App() {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
+    console.log(storedUser)
+
     if (storedUser) {
-      const parsedUser = JSON.parse(storedUser)
-      dispatch(setLoginUser(parsedUser))
+      try {
+        const parsedUser = JSON.parse(storedUser)
+        dispatch(setLoginUser(parsedUser))
+      } catch (error) {
+        console.error('Error parsing storedUser:', error)
+      }
     }
-  }, [])
+  }, [dispatch])
+
   return (
     <>
       <Header />
@@ -51,6 +59,14 @@ function App() {
           element={
             <PrivateRoute>
               <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/new-article"
+          element={
+            <PrivateRoute>
+              <NewArticle />
             </PrivateRoute>
           }
         />

@@ -28,23 +28,23 @@ export default function Header() {
       {isAuth ? (
         <div className={style.header__container}>
           <Link
-            to="/articles"
-            className={`${style.header__container__btn} ${style.sign__up}`}
+            to="/new-article"
+            className={`${style.header__container__btn} ${style.create_article}`}
             type="button"
           >
             Create article
           </Link>
           <Link
             to="/profile"
-            className={`${style.header__container__btn} ${style.sign__in}`}
+            className={`${style.header__container__btn} ${style.username}`}
             type="button"
           >
-            {username}
-            <img src={avatar} alt="avatar" />
+            <span className={style.username_span}>{username}</span>
+            <img className={style.username_img} src={avatar} alt="avatar" />
           </Link>
           <Link
             to="/articles"
-            className={`${style.header__container__btn} ${style.sign__in}`}
+            className={`${style.header__container__btn} ${style.logout}`}
             type="button"
             onClick={handleLogout}
           >
