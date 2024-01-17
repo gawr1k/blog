@@ -64,39 +64,38 @@ export async function putUserProfile(userData) {
     }),
   })
   if (!response.ok) {
-    console.log(response)
-
     throw new Error(`Editing profile failed: ${response.status}`)
   }
   const responseData = await response.json()
-  console.log(responseData)
-
   return responseData
 }
 
 export async function postRegisterUser(userData) {
-  const url = new URL('users', BASE_URL)
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ user: userData }),
-  })
-  if (!response.ok) {
-    console.log(response)
-    const errorData = await response.json()
-    throw new Error(errorData.errors.body[0])
-  }
-  const data = await response.json()
-  console.log(data)
-  return data
-}
+  try {
+    const url = new URL('users', BASE_URL)
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user: userData }),
+    })
 
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.errors.body[0])
+    }
+
+    const data = await response.json()
+    message.success('Registration successful!')
+    return data
+  } catch (error) {
+    message.error(`Registration failed: ${error.message}`)
+    throw error
+  }
+}
 export async function postCreateArticle(jwtToken, articleData) {
   const url = new URL('articles', BASE_URL)
-  console.log(jwtToken, articleData)
-
   const headers = {
     Authorization: `Bearer ${jwtToken}`,
     'Content-Type': 'application/json',
@@ -109,11 +108,9 @@ export async function postCreateArticle(jwtToken, articleData) {
   try {
     const response = await fetch(url, requestOptions)
     if (!response.ok) {
-      console.log(response)
       throw new Error(`createArticle Error: ${response.status}`)
     }
     const responseData = await response.json()
-    console.log(responseData)
     return responseData
   } catch (error) {
     message.error('Failed to create article. Please try again.')

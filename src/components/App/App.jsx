@@ -22,7 +22,6 @@ function App() {
       const parsedUser = JSON.parse(storedUser)
       dispatch(setLoginUser(parsedUser))
     }
-    // dispatch(logoutUser())
   }, [dispatch])
 
   return (

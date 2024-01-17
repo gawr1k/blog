@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { message } from 'antd'
 
 import { putUserProfile } from '../../api/api.js'
 
@@ -7,12 +8,18 @@ const initialState = {
   status: 'idle',
   error: null,
 }
-
 export const editProfile = createAsyncThunk(
   'profile/editProfile',
   async (userData) => {
-    const response = await putUserProfile(userData)
-    return response.user
+    try {
+      const response = await putUserProfile(userData)
+      message.success('Profile updated successfully!')
+      return response.user
+    } catch (error) {
+      console.error('editProfile Error:', error)
+      message.error('Failed to update profile. Please try again.')
+      throw error
+    }
   }
 )
 
