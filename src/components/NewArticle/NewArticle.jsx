@@ -1,19 +1,24 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-duplicates */
 // eslint-disable-next-line object-curly-newline
-import { Button, Col, Form, Input } from 'antd'
-import { useState } from 'react'
+import { Button, Col, Form, Input, message } from 'antd'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import useAuth from '../../hooks/use-auth.js'
-import { createArticleAsync } from '../../store/slices/createArticleSlice.js'
+import {
+  createArticleAsync,
+  resetState,
+} from '../../store/slices/createArticleSlice.js'
 
 import style from './NewArticle.module.scss'
 
 function NewArticle() {
   const navigate = useNavigate()
   const loadingState = useSelector((state) => state.create.loading)
-  console.log(loadingState)
+  const article = useSelector((state) => state.create.createdArticle?.article)
+
   const { TextArea } = Input
   const { token } = useAuth()
   const [inputValues, setInputValues] = useState([])
@@ -32,6 +37,15 @@ function NewArticle() {
     newInputValues.splice(index, 1)
     setInputValues(newInputValues)
   }
+  useEffect(() => {
+    if (article) {
+      console.log(1)
+      message.success('Article created successfully')
+      // navigate('/articles/post/:slug')
+      navigate(`/articles/post/${article.slug}`)
+      dispatch(resetState())
+    }
+  }, [article])
 
   const onFinish = async (values) => {
     const articleData = {
@@ -40,15 +54,13 @@ function NewArticle() {
       body: values.body,
       tagList: values.tagList.map((tag) => tag.trim()),
     }
-    const response = await dispatch(
+    await dispatch(
       createArticleAsync({
         jwtToken: token,
         article: articleData,
       })
     )
-    if (response.ok) {
-      navigate('/')
-    }
+    console.log(article)
   }
 
   return (

@@ -94,7 +94,7 @@ export async function postRegisterUser(userData) {
 }
 
 export async function postCreateArticle(jwtToken, articleData) {
-  const url = new URL('articlйes', BASE_URL)
+  const url = new URL('articles', BASE_URL)
   console.log(jwtToken, articleData)
 
   const headers = {
@@ -114,7 +114,7 @@ export async function postCreateArticle(jwtToken, articleData) {
     }
     const responseData = await response.json()
     console.log(responseData)
-    return responseData.article
+    return responseData
   } catch (error) {
     message.error('Failed to create article. Please try again.')
     throw error

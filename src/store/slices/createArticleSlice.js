@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import { postCreateArticle } from '../../api/api.js'
@@ -21,22 +20,34 @@ const createArticlesSlice = createSlice({
   initialState: {
     error: null,
     loading: false,
+    createdArticle: { article: false },
   },
-  reducers: {},
+  reducers: {
+    resetState: () => ({
+      error: null,
+      loading: false,
+      createdArticle: { article: false },
+    }),
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(createArticleAsync.pending, (state) => {
-        state.loading = true
-        state.error = null
-      })
-      .addCase(createArticleAsync.fulfilled, (state) => {
-        state.loading = false
-      })
-      .addCase(createArticleAsync.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-      })
+      .addCase(createArticleAsync.pending, (state) => ({
+        ...state,
+        loading: true,
+        error: null,
+        createdArticle: null,
+      }))
+      .addCase(createArticleAsync.fulfilled, (state, action) => ({
+        ...state,
+        loading: false,
+        createdArticle: action.payload,
+      }))
+      .addCase(createArticleAsync.rejected, (state, action) => ({
+        ...state,
+        loading: false,
+        error: action.payload,
+      }))
   },
 })
-
+export const { resetState } = createArticlesSlice.actions
 export default createArticlesSlice.reducer
