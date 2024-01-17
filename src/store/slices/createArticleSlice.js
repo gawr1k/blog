@@ -5,37 +5,38 @@ import { postCreateArticle } from '../../api/api.js'
 
 export const createArticleAsync = createAsyncThunk(
   'articles/createArticle',
-  async ({ jwtToken, articleData }, { rejectWithValue }) => {
+  async ({ jwtToken, article }) => {
     try {
-      const article = await postCreateArticle(jwtToken, articleData)
-      return article
+      const createdArticle = await postCreateArticle(jwtToken, article)
+      return createdArticle
     } catch (error) {
-      return rejectWithValue(error.message)
+      console.error('createArticle Error:', error)
+      throw error
     }
   }
 )
 
-const articlesSlice = createSlice({
+const createArticlesSlice = createSlice({
   name: 'articles',
   initialState: {
-    creatingArticle: false,
     error: null,
+    loading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(createArticleAsync.pending, (state) => {
-        state.creatingArticle = true
+        state.loading = true
         state.error = null
       })
       .addCase(createArticleAsync.fulfilled, (state) => {
-        state.creatingArticle = false
+        state.loading = false
       })
       .addCase(createArticleAsync.rejected, (state, action) => {
-        state.creatingArticle = false
+        state.loading = false
         state.error = action.payload
       })
   },
 })
 
-export default articlesSlice.reducer
+export default createArticlesSlice.reducer

@@ -1,3 +1,5 @@
+import { message } from 'antd'
+
 const BASE_URL = 'https://blog.kata.academy/api/'
 
 export async function getArticles(page = 1, limit = 5) {
@@ -92,7 +94,8 @@ export async function postRegisterUser(userData) {
 }
 
 export async function postCreateArticle(jwtToken, articleData) {
-  const url = new URL('articles', BASE_URL)
+  const url = new URL('articlйes', BASE_URL)
+  console.log(jwtToken, articleData)
 
   const headers = {
     Authorization: `Bearer ${jwtToken}`,
@@ -113,7 +116,7 @@ export async function postCreateArticle(jwtToken, articleData) {
     console.log(responseData)
     return responseData.article
   } catch (error) {
-    console.error('Network error:', error.message)
+    message.error('Failed to create article. Please try again.')
     throw error
   }
 }

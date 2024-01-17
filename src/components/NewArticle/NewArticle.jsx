@@ -1,12 +1,23 @@
+/* eslint-disable import/no-duplicates */
 // eslint-disable-next-line object-curly-newline
 import { Button, Col, Form, Input } from 'antd'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
+import useAuth from '../../hooks/use-auth.js'
+import { createArticleAsync } from '../../store/slices/createArticleSlice.js'
 
 import style from './NewArticle.module.scss'
 
 function NewArticle() {
+  const navigate = useNavigate()
+  const loadingState = useSelector((state) => state.create.loading)
+  console.log(loadingState)
   const { TextArea } = Input
+  const { token } = useAuth()
   const [inputValues, setInputValues] = useState([])
+  const dispatch = useDispatch()
 
   const handleAddInput = () => {
     setInputValues([...inputValues, ''])
@@ -22,8 +33,22 @@ function NewArticle() {
     setInputValues(newInputValues)
   }
 
-  const onFinish = (values) => {
-    console.log('Received values:', values)
+  const onFinish = async (values) => {
+    const articleData = {
+      title: values.title,
+      description: values.description,
+      body: values.body,
+      tagList: values.tagList.map((tag) => tag.trim()),
+    }
+    const response = await dispatch(
+      createArticleAsync({
+        jwtToken: token,
+        article: articleData,
+      })
+    )
+    if (response.ok) {
+      navigate('/')
+    }
   }
 
   return (
@@ -50,7 +75,7 @@ function NewArticle() {
       <Col>
         <span className={style.span}>Short description</span>
         <Form.Item
-          name="shortDescription"
+          name="description"
           rules={[
             {
               type: 'string',
@@ -71,7 +96,7 @@ function NewArticle() {
       <Col>
         <span className={style.span}>Text</span>
         <Form.Item
-          name="text"
+          name="body"
           rules={[
             {
               type: 'string',
@@ -100,7 +125,7 @@ function NewArticle() {
                   }}
                 >
                   <Form.Item
-                    name={`tagList[${index}]`}
+                    name={['tagList', index]}
                     rules={[
                       {
                         type: 'string',
@@ -113,7 +138,7 @@ function NewArticle() {
                     <Input
                       style={{ height: 40, width: 300 }}
                       placeholder="Tag"
-                      name="tag"
+                      name={`tagList[${index}]`}
                       value={value}
                       onChange={(e) => handleInputChange(index, e.target.value)}
                     />
@@ -147,6 +172,7 @@ function NewArticle() {
         style={{ height: 40, width: 319 }}
         type="primary"
         htmlType="submit"
+        loading={loadingState}
       >
         Send
       </Button>

@@ -19,7 +19,6 @@ function App() {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
-    console.log(storedUser)
 
     if (storedUser) {
       try {

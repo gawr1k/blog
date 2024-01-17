@@ -4,6 +4,7 @@ import postsReducer from './slices/postsSlice.js'
 import articleSlice from './slices/articleSlice.js'
 import loginSlice from './slices/loginSlice.js'
 import profileSlice from './slices/profileSlice.js'
+import createArticlesSlice from './slices/createArticleSlice.js'
 
 export default configureStore({
   reducer: {
@@ -11,5 +12,6 @@ export default configureStore({
     article: articleSlice,
     user: loginSlice,
     profile: profileSlice,
+    create: createArticlesSlice,
   },
 })
