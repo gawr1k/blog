@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-wrap-multilines */
 import { Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -19,24 +18,22 @@ function App() {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
-
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser)
-        dispatch(setLoginUser(parsedUser))
-      } catch (error) {
-        console.error('Error parsing storedUser:', error)
-      }
+    if (storedUser !== null && storedUser !== undefined) {
+      const parsedUser = JSON.parse(storedUser)
+      dispatch(setLoginUser(parsedUser))
     }
+    // dispatch(logoutUser())
   }, [dispatch])
 
   return (
     <>
       <Header />
+
       <Routes>
         <Route path="/" element={<PostList />} />
         <Route path="/articles" element={<PostList />} />
         <Route path="/articles/post/:slug" element={<Slug />} />
+
         <Route
           path="/sign-in"
           element={
@@ -45,6 +42,7 @@ function App() {
             </PublicRoute>
           }
         />
+
         <Route
           path="/sign-up"
           element={
@@ -53,6 +51,7 @@ function App() {
             </PublicRoute>
           }
         />
+
         <Route
           path="/profile"
           element={
@@ -61,6 +60,7 @@ function App() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/new-article"
           element={

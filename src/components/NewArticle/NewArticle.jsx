@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/no-duplicates */
-// eslint-disable-next-line object-curly-newline
 import { Button, Col, Form, Input, message } from 'antd'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -39,9 +36,7 @@ function NewArticle() {
   }
   useEffect(() => {
     if (article) {
-      console.log(1)
       message.success('Article created successfully')
-      // navigate('/articles/post/:slug')
       navigate(`/articles/post/${article.slug}`)
       dispatch(resetState())
     }
@@ -60,7 +55,6 @@ function NewArticle() {
         article: articleData,
       })
     )
-    console.log(article)
   }
 
   return (

@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { message } from 'antd'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import { postLoginUser, postRegisterUser } from '../../api/api.js'
@@ -16,17 +17,19 @@ const initialState = {
 export const loginUser = createAsyncThunk(
   'user/login',
   async ({ email, password }) => {
-    const user = await postLoginUser(email, password)
-    console.log(user)
-    return user
+    try {
+      const user = await postLoginUser(email, password)
+      return user
+    } catch (error) {
+      message.error('Failed to log in. Please try again.')
+      throw error
+    }
   }
 )
-
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async (userData) => {
     const response = await postRegisterUser(userData)
-    console.log(response)
     return response
   }
 )
@@ -61,8 +64,6 @@ const loginSlice = createSlice({
       }))
       .addCase(loginUser.fulfilled, (state, action) => {
         const { user } = action.payload
-        console.log(action.payload)
-        console.log(JSON.stringify(user))
         localStorage.setItem('user', JSON.stringify(user))
         return {
           ...state,
@@ -71,14 +72,23 @@ const loginSlice = createSlice({
         }
       })
       .addCase(loginUser.rejected, (state, action) => {
-        const { status, data } = action.payload.response
+        const { error } = action
+        if (error.response) {
+          const { status, data } = error.response
+
+          return {
+            ...state,
+            status: 'failed',
+            error: {
+              status,
+              message: data.message,
+            },
+          }
+        }
         return {
           ...state,
           status: 'failed',
-          error: {
-            status,
-            message: data.message,
-          },
+          error: error.message,
         }
       })
       .addCase(registerUser.pending, (state) => ({
@@ -87,8 +97,6 @@ const loginSlice = createSlice({
       }))
       .addCase(registerUser.fulfilled, (state, action) => {
         const { user } = action.payload
-        console.log(action.payload)
-        console.log(JSON.stringify())
         localStorage.setItem('user', JSON.stringify(user))
         return {
           ...state,
