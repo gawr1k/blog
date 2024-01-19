@@ -28,7 +28,7 @@ function Profile() {
         <input
           className={errors.username ? style.input__error : style.input}
           {...register('username', {
-            required: true,
+            minLength: 1,
           })}
           placeholder="Username"
         />
@@ -40,7 +40,6 @@ function Profile() {
         <input
           className={errors.email ? style.input__error : style.input}
           {...register('email', {
-            required: true,
             pattern: /^\S+@\S+$/,
           })}
           placeholder="Email address"

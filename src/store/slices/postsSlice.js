@@ -2,10 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { getArticles } from '../../api/api.js'
 
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (page) => {
-  const response = await getArticles(page)
-  return response
-})
+export const fetchPosts = createAsyncThunk(
+  'posts/fetchPosts',
+  async ({ page, token }) => {
+    const response = await getArticles(page, token)
+    return response
+  }
+)
 
 const postsSlice = createSlice({
   name: 'posts',
@@ -41,4 +44,5 @@ const postsSlice = createSlice({
 
 export const selectLoadingPosts = (state) => state.posts.loading
 export const selectPosts = (state) => state.posts.posts
+export const selectError = (state) => state.posts.error
 export default postsSlice.reducer

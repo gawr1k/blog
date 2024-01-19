@@ -2,22 +2,43 @@ import { message } from 'antd'
 
 const BASE_URL = 'https://blog.kata.academy/api/'
 
-export async function getArticles(page = 1, limit = 5) {
-  const offset = (page - 1) * limit
-  const url = new URL('articles', BASE_URL)
-  url.searchParams.set('limit', limit)
-  url.searchParams.set('offset', offset)
-  const response = await fetch(url)
-  if (!response.ok) {
-    throw new Error(`getArticles Error: ${response.status}`)
+export async function getArticles(page = 1, token = null) {
+  try {
+    const offset = (page - 1) * 5
+    const url = new URL('articles', BASE_URL)
+    url.searchParams.set('limit', 5)
+    url.searchParams.set('offset', offset)
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    if (token) {
+      headers.Authorization = `Token ${token}`
+    }
+    const response = await fetch(url, {
+      headers,
+    })
+    if (!response.ok) {
+      throw new Error(`getArticles Error: ${response.status}`)
+    }
+    const data = await response.json()
+    return data
+  } catch (error) {
+    message.error(`Error in getArticles: ${error.message}`)
+    throw error
   }
-  const data = await response.json()
-  return data
 }
 
-export async function getArticle(slug) {
+export async function getArticle(slug, token = null) {
   const url = new URL(`articles/${slug}`, BASE_URL)
-  const response = await fetch(url)
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+  if (token) {
+    headers.Authorization = `Token ${token}`
+  }
+  const response = await fetch(url, {
+    headers,
+  })
   if (!response.ok) {
     throw new Error(`getArticle Error: ${response.status}`)
   }
@@ -80,12 +101,10 @@ export async function postRegisterUser(userData) {
       },
       body: JSON.stringify({ user: userData }),
     })
-
     if (!response.ok) {
       const errorData = await response.json()
       throw new Error(errorData.errors.body[0])
     }
-
     const data = await response.json()
     message.success('Registration successful!')
     return data
@@ -94,6 +113,7 @@ export async function postRegisterUser(userData) {
     throw error
   }
 }
+
 export async function postCreateArticle(jwtToken, articleData) {
   const url = new URL('articles', BASE_URL)
   const headers = {
@@ -116,4 +136,43 @@ export async function postCreateArticle(jwtToken, articleData) {
     message.error('Failed to create article. Please try again.')
     throw error
   }
+}
+
+export async function postFavorite(slug, token) {
+  try {
+    const url = new URL(`articles/${slug}/favorite`, BASE_URL)
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    })
+    if (!response.ok) {
+      throw new Error(`postFavorite Error: ${response.status}`)
+    }
+    const data = await response.json()
+    return data.article
+  } catch (error) {
+    message.error(
+      'Произошла ошибка при добавлении в избранное. Пожалуйста, попробуйте снова.'
+    )
+    throw error
+  }
+}
+
+export async function deleteFavorite(slug, token) {
+  const url = new URL(`articles/${slug}/favorite`, BASE_URL)
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${token}`,
+    },
+  })
+  if (!response.ok) {
+    throw new Error(`deleteFavorite Error: ${response.status}`)
+  }
+  const data = await response.json()
+  return data.article
 }

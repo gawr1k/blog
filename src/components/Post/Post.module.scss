@@ -72,6 +72,7 @@
     }
     .like__container {
       display: flex;
+      cursor: pointer;
       justify-content: space-between;
       align-items: center;
       height: 28px;
@@ -131,4 +132,8 @@
       border-radius: 23px;
     }
   }
+}
+.like_input {
+  opacity: 0;
+  position: absolute;
 }

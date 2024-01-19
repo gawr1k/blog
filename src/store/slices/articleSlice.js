@@ -4,8 +4,8 @@ import { getArticle } from '../../api/api.js'
 
 export const fetchArticle = createAsyncThunk(
   'article/fetchArticle',
-  async (slug) => {
-    const response = await getArticle(slug)
+  async ({ slug, token }) => {
+    const response = await getArticle(slug, token)
     return response
   }
 )
@@ -13,7 +13,9 @@ export const fetchArticle = createAsyncThunk(
 const articleSlice = createSlice({
   name: 'article',
   initialState: {
-    article: {},
+    article: {
+      article: {},
+    },
     loading: true,
     status: null,
     error: null,
@@ -43,6 +45,7 @@ const articleSlice = createSlice({
 })
 
 export const selectArticle = (state) => state.article.article.article
+export const selectError = (state) => state.article.error
 export const selectLoadingArticle = (state) => state.article.loading
 
 export default articleSlice.reducer

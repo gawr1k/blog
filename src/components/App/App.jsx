@@ -29,8 +29,10 @@ function App() {
       <Header />
 
       <Routes>
-        <Route path="/" element={<PostList />} />
-        <Route path="/articles" element={<PostList />} />
+        <Route path="/" element={<PostList />}>
+          <Route path="articles" element={<PostList />} />
+        </Route>
+
         <Route path="/articles/post/:slug" element={<Slug />} />
 
         <Route

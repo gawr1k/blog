@@ -53,6 +53,7 @@ const loginSlice = createSlice({
         token: token || null,
         username: username || null,
       }
+      state.status = 'succeeded'
     },
   },
   extraReducers: (builder) => {
@@ -111,7 +112,7 @@ const loginSlice = createSlice({
       }))
   },
 })
-
 export const selectToken = (state) => state.user.user.token
+export const selectStatus = (state) => state.user
 export const { logoutUser, setLoginUser } = loginSlice.actions
 export default loginSlice.reducer
