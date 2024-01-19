@@ -1,19 +1,30 @@
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import avatar from '../../assets/avatar_blog.svg'
+import {
+  selectStatus,
+  logoutUser,
+  fetchGetProfile,
+} from '../../store/slices/loginSlice.js'
 import useAuth from '../../hooks/use-auth.js'
-import { logoutUser } from '../../store/slices/loginSlice.js'
 
 import style from './Header.module.scss'
 
 export default function Header() {
-  const { isAuth, username } = useAuth()
+  const { isAuth, username, token, image } = useAuth()
   const dispatch = useDispatch()
+  const status = useSelector(selectStatus)
+
   const handleLogout = () => {
     dispatch(logoutUser())
   }
-
+  useEffect(() => {
+    if (status === 'succeeded') {
+      dispatch(fetchGetProfile({ username, token }))
+      console.log(image)
+    }
+  }, [status, dispatch])
   return (
     <header className={style.header}>
       <div className={style.header__container}>
@@ -40,7 +51,7 @@ export default function Header() {
             type="button"
           >
             <span className={style.username_span}>{username}</span>
-            <img className={style.username_img} src={avatar} alt="avatar" />
+            <img className={style.username_img} src={image} alt="avatar" />
           </Link>
           <Link
             to="/articles"

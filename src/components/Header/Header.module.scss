@@ -83,6 +83,11 @@
 }
 .username {
   margin-left: 27px;
+  &_img {
+    height: 46px;
+    width: 46px;
+    border-radius: 23px;
+  }
 }
 .username_span {
   margin-right: 13px;

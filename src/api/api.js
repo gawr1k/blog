@@ -199,3 +199,25 @@ export async function deleteArticle(slug, token) {
     throw error
   }
 }
+
+export async function getProfile(username, token) {
+  try {
+    const url = `${BASE_URL}/profiles/${username}`
+    const headers = {
+      Authorization: `Token ${token}`,
+    }
+    const response = await fetch(url, {
+      method: 'GET',
+      headers,
+    })
+    if (!response.ok) {
+      console.log(response)
+      throw new Error(`Ошибка при получении профиля: ${response.status}`)
+    }
+    const data = await response.json()
+    return data.profile
+  } catch (error) {
+    console.error(`Ошибка в getProfile: ${error.message}`)
+    throw error
+  }
+}

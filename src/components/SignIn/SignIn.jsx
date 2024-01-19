@@ -19,7 +19,6 @@ function SignIn() {
   const onSubmit = (data) => {
     dispatch(loginUser({ email: data.email, password: data.password }))
   }
-
   return (
     <form className={style.form}>
       <h1 className={style.title}>Sign In</h1>
