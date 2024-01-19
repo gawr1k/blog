@@ -27,7 +27,7 @@
     align-items: center;
     border-radius: 2px;
     border: 1px solid var(--text-color-secondary, rgba(0, 0, 0, 0.5));
-    color: var(--text-color, rgba(0, 0, 0, 0.75));
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
     font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-style: normal;
@@ -40,6 +40,8 @@
     margin-bottom: 0;
     height: 75px;
     flex-shrink: 0;
+
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
     position: absolute;
     width: 65%;
     max-width: 700px;
@@ -59,7 +61,26 @@
       font-style: normal;
       font-weight: 400;
       line-height: 28px;
-      max-width: 160px;
+      max-width: 250px;
+      height: 28px;
+      align-items: center;
+      display: flex;
+      margin: 0;
+      margin-right: 13px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: block;
+    }
+    .title:hover {
+      text-decoration: none;
+      font-size: 20px;
+      color: var(--info-color, #7543da);
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 28px;
+      max-width: 250px;
       height: 28px;
       align-items: center;
       display: flex;

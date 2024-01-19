@@ -17,7 +17,6 @@ function SignUp() {
     formState: { errors },
   } = useForm()
   const onSubmit = (data) => {
-    console.log(data)
     dispatch(registerUser(data))
   }
 

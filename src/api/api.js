@@ -154,25 +154,48 @@ export async function postFavorite(slug, token) {
     const data = await response.json()
     return data.article
   } catch (error) {
-    message.error(
-      'Произошла ошибка при добавлении в избранное. Пожалуйста, попробуйте снова.'
-    )
+    message.error('Произошла ошибка при лайке. Пожалуйста, попробуйте снова.')
     throw error
   }
 }
 
 export async function deleteFavorite(slug, token) {
-  const url = new URL(`articles/${slug}/favorite`, BASE_URL)
-  const response = await fetch(url, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Token ${token}`,
-    },
-  })
-  if (!response.ok) {
-    throw new Error(`deleteFavorite Error: ${response.status}`)
+  try {
+    const url = new URL(`articles/${slug}/favorite`, BASE_URL)
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    })
+    if (!response.ok) {
+      throw new Error(`deleteFavorite Error: ${response.status}`)
+    }
+    const data = await response.json()
+    return data.article
+  } catch (error) {
+    message.error('Failed to delete favorite. Please try again.')
+    throw error
   }
-  const data = await response.json()
-  return data.article
+}
+
+export async function deleteArticle(slug, token) {
+  try {
+    const response = await fetch(`${BASE_URL}/articles/${slug}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+    if (!response.ok) {
+      throw new Error(`Ошибка при удалении статьи: ${response.status}`)
+    }
+    const data = await response.json()
+    message.success('Успешно, статья удалена.')
+    return data
+  } catch (error) {
+    message.success('Успешно, статья удалена.')
+    throw error
+  }
 }

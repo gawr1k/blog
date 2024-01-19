@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
-import { Spin } from 'antd'
+import { Spin, Button, Popconfirm } from 'antd'
 
 import ResultErr from '../ResultErr/ResultErr.jsx'
 import useAuth from '../../hooks/use-auth.js'
@@ -11,6 +12,9 @@ import {
   selectLoadingArticle,
   fetchArticle,
   selectError,
+  dellArticle,
+  selectDelete,
+  deleteInitial,
 } from '../../store/slices/articleSlice.js'
 import { selectStatus } from '../../store/slices/loginSlice.js'
 import like from '../../assets/like__icon.svg'
@@ -25,17 +29,22 @@ export default function Slug() {
   const status = useSelector(selectStatus)
   const error = useSelector(selectError)
   const loading = useSelector(selectLoadingArticle)
+
   const { slug } = useParams()
-  const { isAuth, token } = useAuth()
+  const { isAuth, token, username } = useAuth()
   const [liked, setLiked] = useState(article.favorited)
   const [likeCount, setLikeCount] = useState(article.favoritesCount)
   const likeIconSrc = liked ? activeLike : like
+  const [authorArticle, setAuthurArticle] = useState(article.author.username)
+  const [editable, setEditable] = useState(authorArticle === username)
+  const navigate = useNavigate()
+  const dell = useSelector(selectDelete)
 
   useEffect(() => {
     if (status === 'succeeded') {
       dispatch(fetchArticle({ slug, token }))
     }
-  }, [status, dispatch, slug, token])
+  }, [status, dispatch])
 
   useEffect(() => {
     setLikeCount(article.favoritesCount)
@@ -44,6 +53,21 @@ export default function Slug() {
   useEffect(() => {
     setLiked(article.favorited)
   }, [article])
+
+  useEffect(() => {
+    setAuthurArticle(article.author.username)
+    setEditable(authorArticle === username)
+  }, [article, authorArticle])
+
+  const onDelete = () => {
+    dispatch(dellArticle({ slug, token }))
+  }
+  useEffect(() => {
+    if (dell === true) {
+      navigate('/articles')
+      dispatch(deleteInitial())
+    }
+  }, [dell])
 
   const handleClick = () => {
     switch (liked) {
@@ -105,22 +129,50 @@ export default function Slug() {
           </div>
         </div>
       </div>
-      <div className={style.container__bio}>
-        <div className={style.container__name__data}>
-          <h3 className={style.name}>{article.author.username}</h3>
-          <h5 className={style.data}>
-            {new Intl.DateTimeFormat('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            }).format(new Date(article.createdAt))}
-          </h5>
+      <div className={style.wrapping}>
+        <div className={style.container__bio}>
+          <div className={style.container__name__data}>
+            <h3 className={style.name}>{article.author.username}</h3>
+            <h5 className={style.data}>
+              {new Intl.DateTimeFormat('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              }).format(new Date(article.createdAt))}
+            </h5>
+          </div>
+          <img
+            className={style.avatar}
+            src={article.author.image}
+            alt="Author Avatar"
+          />
         </div>
-        <img
-          className={style.avatar}
-          src={article.author.image}
-          alt="Author Avatar"
-        />
+        {editable && (
+          <div className={style.container__btn}>
+            <Popconfirm
+              placement="rightTop"
+              description="Are you sure to delete this article?"
+              okText="Yes"
+              cancelText="No"
+              onConfirm={onDelete}
+            >
+              <Button style={{ height: 31, width: 78 }} danger>
+                Delete
+              </Button>
+            </Popconfirm>
+            <Button
+              style={{
+                height: 31,
+                width: 65,
+                borderColor: '#52C41A',
+                color: '#52C41A',
+              }}
+              danger
+            >
+              Edit
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )

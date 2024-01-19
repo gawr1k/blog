@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { getArticle } from '../../api/api.js'
+import { getArticle, deleteArticle } from '../../api/api.js'
 
 export const fetchArticle = createAsyncThunk(
   'article/fetchArticle',
@@ -10,17 +10,34 @@ export const fetchArticle = createAsyncThunk(
   }
 )
 
+export const dellArticle = createAsyncThunk(
+  'article/dellArticle',
+  async ({ slug, token }) => {
+    const response = await deleteArticle(slug, token)
+    return response
+  }
+)
+
 const articleSlice = createSlice({
   name: 'article',
   initialState: {
     article: {
-      article: {},
+      article: {
+        author: {
+          username: false,
+        },
+      },
     },
+    delete: false,
     loading: true,
     status: null,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    deleteInitial: (state) => {
+      state.delete = false
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchArticle.pending, (state) => ({
@@ -41,11 +58,17 @@ const articleSlice = createSlice({
         error: action.error.message,
         loading: false,
       }))
+      .addCase(dellArticle.rejected, (state) => ({
+        ...state,
+        delete: true,
+      }))
   },
 })
 
 export const selectArticle = (state) => state.article.article.article
 export const selectError = (state) => state.article.error
+export const selectDelete = (state) => state.article.delete
 export const selectLoadingArticle = (state) => state.article.loading
+export const { deleteInitial } = articleSlice.actions
 
 export default articleSlice.reducer
