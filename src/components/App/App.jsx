@@ -27,14 +27,11 @@ function App() {
   return (
     <>
       <Header />
-
       <Routes>
         <Route path="/" element={<PostList />}>
           <Route path="articles" element={<PostList />} />
         </Route>
-
         <Route path="/articles/post/:slug" element={<Slug />} />
-
         <Route
           path="/sign-in"
           element={
@@ -43,7 +40,6 @@ function App() {
             </PublicRoute>
           }
         />
-
         <Route
           path="/sign-up"
           element={
@@ -52,7 +48,6 @@ function App() {
             </PublicRoute>
           }
         />
-
         <Route
           path="/profile"
           element={
@@ -61,7 +56,6 @@ function App() {
             </PrivateRoute>
           }
         />
-
         <Route
           path="/new-article"
           element={

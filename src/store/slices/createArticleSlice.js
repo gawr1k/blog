@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { message } from 'antd'
 
 import { postCreateArticle } from '../../api/api.js'
 
@@ -9,7 +10,7 @@ export const createArticleAsync = createAsyncThunk(
       const createdArticle = await postCreateArticle(jwtToken, article)
       return createdArticle
     } catch (error) {
-      console.error('createArticle Error:', error)
+      message.error('createArticle Error:', error)
       throw error
     }
   }
@@ -35,7 +36,7 @@ const createArticlesSlice = createSlice({
         ...state,
         loading: true,
         error: null,
-        createdArticle: null,
+        createdArticle: false,
       }))
       .addCase(createArticleAsync.fulfilled, (state, action) => ({
         ...state,
@@ -49,5 +50,9 @@ const createArticlesSlice = createSlice({
       }))
   },
 })
+
+export const selectLoading = (state) => state.create.loading
+export const selectArticle = (state) => state.create.createdArticle.article
+
 export const { resetState } = createArticlesSlice.actions
 export default createArticlesSlice.reducer

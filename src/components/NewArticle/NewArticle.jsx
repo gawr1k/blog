@@ -7,15 +7,16 @@ import useAuth from '../../hooks/use-auth.js'
 import {
   createArticleAsync,
   resetState,
+  selectLoading,
+  selectArticle,
 } from '../../store/slices/createArticleSlice.js'
 
 import style from './NewArticle.module.scss'
 
 function NewArticle() {
   const navigate = useNavigate()
-  const loadingState = useSelector((state) => state.create.loading)
-  const article = useSelector((state) => state.create.createdArticle?.article)
-
+  const loadingState = useSelector(selectLoading)
+  const article = useSelector(selectArticle)
   const { TextArea } = Input
   const { token } = useAuth()
   const [inputValues, setInputValues] = useState([])
@@ -24,16 +25,19 @@ function NewArticle() {
   const handleAddInput = () => {
     setInputValues([...inputValues, ''])
   }
+
   const handleInputChange = (index, value) => {
     const newInputValues = [...inputValues]
     newInputValues[index] = value
     setInputValues(newInputValues)
   }
+
   const handleDeleteInput = (index) => {
     const newInputValues = [...inputValues]
     newInputValues.splice(index, 1)
     setInputValues(newInputValues)
   }
+
   useEffect(() => {
     if (article) {
       message.success('Article created successfully')
@@ -43,11 +47,14 @@ function NewArticle() {
   }, [article])
 
   const onFinish = async (values) => {
+    const tagList = values.tagList
+      ? values.tagList.map((tag) => tag.trim())
+      : []
     const articleData = {
       title: values.title,
       description: values.description,
       body: values.body,
-      tagList: values.tagList.map((tag) => tag.trim()),
+      tagList,
     }
     await dispatch(
       createArticleAsync({

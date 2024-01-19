@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import ResultErr from '../ResultErr/ResultErr.jsx'
+import { selectToken, selectStatus } from '../../store/slices/loginSlice.js'
 import {
   fetchPosts,
   selectPosts,
@@ -14,11 +15,11 @@ import Post from '../Post/Post.jsx'
 import style from './PostList.module.scss'
 
 export default function PostList() {
-  const { token } = useSelector((state) => state.user.user)
-  const { status } = useSelector((state) => state.user)
   const [currentPage, setCurrentPage] = useState(1)
   const loading = useSelector(selectLoadingPosts)
   const dispatch = useDispatch()
+  const token = useSelector(selectToken)
+  const status = useSelector(selectStatus)
   const posts = useSelector(selectPosts)
   const error = useSelector(selectError)
 

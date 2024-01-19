@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { message } from 'antd'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
@@ -113,6 +112,6 @@ const loginSlice = createSlice({
   },
 })
 export const selectToken = (state) => state.user.user.token
-export const selectStatus = (state) => state.user
+export const selectStatus = (state) => state.user.status
 export const { logoutUser, setLoginUser } = loginSlice.actions
 export default loginSlice.reducer

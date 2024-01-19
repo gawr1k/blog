@@ -16,7 +16,6 @@ export const editProfile = createAsyncThunk(
       message.success('Profile updated successfully!')
       return response.user
     } catch (error) {
-      console.error('editProfile Error:', error)
       message.error('Failed to update profile. Please try again.')
       throw error
     }

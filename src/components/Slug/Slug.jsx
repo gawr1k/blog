@@ -22,7 +22,7 @@ import style from './Slug.module.scss'
 export default function Slug() {
   const dispatch = useDispatch()
   const article = useSelector(selectArticle)
-  const { status } = useSelector(selectStatus)
+  const status = useSelector(selectStatus)
   const error = useSelector(selectError)
   const loading = useSelector(selectLoadingArticle)
   const { slug } = useParams()
