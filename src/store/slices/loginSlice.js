@@ -1,7 +1,12 @@
 import { message } from 'antd'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { postLoginUser, postRegisterUser, getProfile } from '../../api/api.js'
+import {
+  postLoginUser,
+  postRegisterUser,
+  getProfile,
+  putUserProfile,
+} from '../../api/api.js'
 
 const initialState = {
   user: {
@@ -42,6 +47,20 @@ export const fetchGetProfile = createAsyncThunk(
   async ({ username, token }) => {
     const response = await getProfile(username, token)
     return response
+  }
+)
+
+export const editProfile = createAsyncThunk(
+  'profile/editProfile',
+  async (userData) => {
+    try {
+      const response = await putUserProfile(userData)
+      message.success('Profile updated successfully!')
+      return response.user
+    } catch (error) {
+      message.error('Failed to update profile. Please try again.')
+      throw error
+    }
   }
 )
 
@@ -123,10 +142,7 @@ const loginSlice = createSlice({
         error: action.error.message,
       }))
       .addCase(fetchGetProfile.fulfilled, (state, action) => {
-        // console.log(action.payload)
-
         const { image } = action.payload
-        // console.log(action.payload)
         return {
           ...state,
           user: {
@@ -137,6 +153,24 @@ const loginSlice = createSlice({
           error: action.error ? action.error.message : null,
         }
       })
+      .addCase(editProfile.pending, (state) => ({
+        ...state,
+        status: 'loading',
+      }))
+      .addCase(editProfile.fulfilled, (state, action) => {
+        localStorage.removeItem('user')
+        localStorage.setItem('user', JSON.stringify(action.payload))
+        return {
+          ...state,
+          status: 'succeeded',
+          user: action.payload,
+        }
+      })
+      .addCase(editProfile.rejected, (state, action) => ({
+        ...state,
+        status: 'failed',
+        error: action.error.message,
+      }))
   },
 })
 export const selectToken = (state) => state.user.user.token

@@ -14,11 +14,13 @@ import {
   dellArticle,
   selectDelete,
   deleteInitial,
+  addFavorite,
+  removeFavorite,
 } from '../../store/slices/articleSlice.js'
 import { selectStatus } from '../../store/slices/loginSlice.js'
 import like from '../../assets/like__icon.svg'
 import activeLike from '../../assets/Heart_corazón 1.svg'
-import { addFavorite, removeFavorite } from '../../store/slices/likesSlice.js'
+// import { addFavorite, removeFavorite } from '../../store/slices/likesSlice.js'
 
 import style from './Slug.module.scss'
 
@@ -167,6 +169,9 @@ export default function Slug() {
                 color: '#52C41A',
               }}
               danger
+              onClick={() => {
+                navigate(`/articles/${slug}/edit`)
+              }}
             >
               Edit
             </Button>

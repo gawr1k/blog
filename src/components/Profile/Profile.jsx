@@ -3,7 +3,7 @@ import { Button } from 'antd'
 import { useDispatch } from 'react-redux'
 
 import useAuth from '../../hooks/use-auth.js'
-import { editProfile } from '../../store/slices/profileSlice.js'
+import { editProfile } from '../../store/slices/loginSlice.js'
 
 import style from './Profile.module.scss'
 
@@ -17,7 +17,6 @@ function Profile() {
   } = useForm()
   const onSubmit = (data) => {
     dispatch(editProfile({ ...data, token }))
-    console.log(data)
   }
 
   return (
@@ -29,6 +28,7 @@ function Profile() {
         <input
           className={errors.username ? style.input__error : style.input}
           {...register('username', {
+            required: true,
             minLength: 1,
           })}
           placeholder="Username"
@@ -41,6 +41,7 @@ function Profile() {
         <input
           className={errors.email ? style.input__error : style.input}
           {...register('email', {
+            required: true,
             pattern: /^\S+@\S+$/,
           })}
           placeholder="Email address"
@@ -53,6 +54,7 @@ function Profile() {
         <input
           className={errors.password ? style.input__error : style.input}
           {...register('password', {
+            required: true,
             minLength: 6,
             maxLength: 40,
           })}
@@ -65,7 +67,7 @@ function Profile() {
         Avatar image (url)
         <input
           className={errors.avatarURL ? style.input__error : style.input}
-          {...register('avatarURL', {
+          {...register('image', {
             pattern: /^https?:\/\/.+\..+$/,
           })}
           placeholder="Avatar image"

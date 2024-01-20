@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import avatar from '../../assets/smiley-cyrus.jpg'
 import {
   selectStatus,
   logoutUser,
@@ -22,7 +23,6 @@ export default function Header() {
   useEffect(() => {
     if (status === 'succeeded') {
       dispatch(fetchGetProfile({ username, token }))
-      console.log(image)
     }
   }, [status, dispatch])
   return (
@@ -51,7 +51,11 @@ export default function Header() {
             type="button"
           >
             <span className={style.username_span}>{username}</span>
-            <img className={style.username_img} src={image} alt="avatar" />
+            <img
+              className={style.username_img}
+              src={image || avatar}
+              alt="avatar"
+            />
           </Link>
           <Link
             to="/articles"

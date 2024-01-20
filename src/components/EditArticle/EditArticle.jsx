@@ -1,30 +1,27 @@
-import { Button, Col, Form, Input, message } from 'antd'
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+/* eslint-disable no-unused-vars */
+import { Button, Col, Form, Input } from 'antd'
+import { useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
 
 import useAuth from '../../hooks/use-auth.js'
 import {
-  createArticleAsync,
-  resetState,
-  selectLoading,
   selectArticle,
-} from '../../store/slices/createArticleSlice.js'
+  selectLoadingArticle,
+  updateArticleAsync,
+} from '../../store/slices/articleSlice.js'
 
-import style from './NewArticle.module.scss'
+import style from './EditArticle.module.scss'
 
-function NewArticle() {
-  const navigate = useNavigate()
-  const loadingState = useSelector(selectLoading)
-  const article = useSelector(selectArticle)
-  const { TextArea } = Input
-  const { token } = useAuth()
-  const [inputValues, setInputValues] = useState([])
+function EditArticle() {
   const dispatch = useDispatch()
-
-  const handleAddInput = () => {
-    setInputValues([...inputValues, ''])
-  }
+  const article = useSelector(selectArticle)
+  const loadingState = useSelector(selectLoadingArticle)
+  const [inputValues, setInputValues] = useState(article.tagList || [])
+  const { TextArea } = Input
+  const [form] = Form.useForm()
+  const { token } = useAuth()
+  const { slug } = useParams()
 
   const handleInputChange = (index, value) => {
     const newInputValues = [...inputValues]
@@ -38,13 +35,10 @@ function NewArticle() {
     setInputValues(newInputValues)
   }
 
-  useEffect(() => {
-    if (article) {
-      message.success('Article created successfully')
-      navigate(`/articles/post/${article.slug}`)
-      dispatch(resetState())
-    }
-  }, [article])
+  const handleAddInput = () => {
+    setInputValues([...inputValues, ''])
+    form.setFieldsValue({ tagList: [...inputValues, ''] })
+  }
 
   const onFinish = async (values) => {
     const tagList = values.tagList
@@ -56,16 +50,28 @@ function NewArticle() {
       body: values.body,
       tagList,
     }
+    console.log(articleData)
     await dispatch(
-      createArticleAsync({
-        jwtToken: token,
-        article: articleData,
+      updateArticleAsync({
+        slug,
+        articleData,
+        token,
       })
     )
   }
 
   return (
-    <Form className={style.form} onFinish={onFinish}>
+    <Form
+      initialValues={{
+        title: article.title || '',
+        description: article.description || '',
+        body: article.body || '',
+        tagList: article.tagList || '',
+      }}
+      onFinish={onFinish}
+      className={style.form}
+      form={form}
+    >
       <h1 className={style.title}>Create new article</h1>
       <Col>
         <span className={style.span}>Title</span>
@@ -193,4 +199,4 @@ function NewArticle() {
   )
 }
 
-export default NewArticle
+export default EditArticle

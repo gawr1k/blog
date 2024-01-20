@@ -80,7 +80,7 @@ export async function putUserProfile(userData) {
         email: userData.email,
         username: userData.username,
         password: userData.password,
-        avatarURL: userData.avatarURL,
+        image: userData.image,
       },
     }),
   })
@@ -182,7 +182,8 @@ export async function deleteFavorite(slug, token) {
 
 export async function deleteArticle(slug, token) {
   try {
-    const response = await fetch(`${BASE_URL}/articles/${slug}`, {
+    const url = `${BASE_URL}/articles/${slug}`
+    const response = await fetch(url, {
       method: 'DELETE',
       headers: {
         Authorization: `Token ${token}`,
@@ -218,6 +219,34 @@ export async function getProfile(username, token) {
     return data.profile
   } catch (error) {
     console.error(`Ошибка в getProfile: ${error.message}`)
+    throw error
+  }
+}
+
+export async function updateArticle(slug, articleData, token) {
+  try {
+    console.log(slug, articleData, token)
+    const url = `${BASE_URL}/articles/${slug}`
+    // const url = new URL(`/articles/${slug}`, BASE_URL)
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${token}`,
+    }
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify({ article: articleData }),
+    })
+    if (!response.ok) {
+      console.error(response)
+      throw new Error(`updateArticle Error: ${response.status}`)
+    }
+    const data = await response.json()
+    message.success('Seda artiklit on edukalt uuendatud')
+    return data
+  } catch (error) {
+    message.error(`Error in updateArticle: ${error.message}`)
+    console.error(`Error in updateArticle: ${error.message}`)
     throw error
   }
 }

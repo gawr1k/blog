@@ -11,6 +11,7 @@ import PublicRoute from '../../hooks/PublicRoute.js'
 import PrivateRoute from '../../hooks/PrivateRoute.js'
 import Profile from '../Profile/Profile.jsx'
 import NewArticle from '../NewArticle/NewArticle.jsx'
+import EditArticle from '../EditArticle/EditArticle.jsx'
 import { setLoginUser } from '../../store/slices/loginSlice.js'
 
 function App() {
@@ -61,6 +62,14 @@ function App() {
           element={
             <PrivateRoute>
               <NewArticle />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/articles/:slug/edit"
+          element={
+            <PrivateRoute>
+              <EditArticle />
             </PrivateRoute>
           }
         />
