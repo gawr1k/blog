@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Button, Col, Form, Input, message } from 'antd'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -41,7 +42,7 @@ function NewArticle() {
   useEffect(() => {
     if (article) {
       message.success('Article created successfully')
-      navigate(`/articles/post/${article.slug}`)
+      // navigate(`/articles/post/${article.slug}`)
       dispatch(resetState())
     }
   }, [article])

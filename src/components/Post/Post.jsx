@@ -46,7 +46,7 @@ export default function Post({ post }) {
       <div>
         <div>
           <div className={style.title__container}>
-            <Link to={`/articles/post/${post.slug}`} className={style.title}>
+            <Link to={`/articles/${post.slug}`} className={style.title}>
               {post.title}
             </Link>
             {isAuth ? (

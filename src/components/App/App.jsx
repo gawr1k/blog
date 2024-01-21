@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import Header from '../Header/Header.jsx'
 import PostList from '../PostList/PostList.jsx'
 import Slug from '../Slug/Slug.jsx'
 import SignIn from '../SignIn/SignIn.jsx'
@@ -14,6 +13,8 @@ import NewArticle from '../NewArticle/NewArticle.jsx'
 import EditArticle from '../EditArticle/EditArticle.jsx'
 import { setLoginUser } from '../../store/slices/loginSlice.js'
 import { setCurrentPage } from '../../store/slices/postsSlice.js'
+import Layout from '../Layout.jsx'
+import NotFoundPage from '../NotFoundPage/NotFoundPage.jsx'
 
 function App() {
   const dispatch = useDispatch()
@@ -38,13 +39,19 @@ function App() {
   }, [dispatch])
 
   return (
-    <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<PostList />}>
-          <Route path="articles" element={<PostList />} />
-        </Route>
-        <Route path="/articles/post/:slug" element={<Slug />} />
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<PostList />} />
+        <Route path="articles" element={<PostList />} />
+        <Route path="articles/:slug" element={<Slug />} />
+        <Route
+          path="articles/:slug/edit"
+          element={
+            <PrivateRoute>
+              <EditArticle />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/sign-in"
           element={
@@ -77,16 +84,9 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route
-          path="/articles/:slug/edit"
-          element={
-            <PrivateRoute>
-              <EditArticle />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </>
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   )
 }
 

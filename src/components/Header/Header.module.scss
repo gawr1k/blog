@@ -67,6 +67,19 @@
   font-weight: 400;
   line-height: 22px;
 }
+.create_article_activ {
+  width: 112px;
+  height: 31px;
+  justify-content: center;
+  border-radius: 5px;
+  border: 1px solid var(--success-color, #52c41a);
+  color: #1890ff;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+}
 
 .logout {
   margin-left: 27px;
@@ -99,5 +112,18 @@
 }
 
 .header__container__btn:hover {
+  color: #1890ff;
+}
+
+.active {
+  color: #1890ff;
+}
+
+.sign__up_activ {
+  width: 109px;
+  height: 51px;
+  justify-content: center;
+  border-radius: 5px;
+  border: 1px solid var(--success-color, #52c41a);
   color: #1890ff;
 }

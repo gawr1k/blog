@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable no-confusing-arrow */
+import { NavLink } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -28,26 +30,38 @@ export default function Header() {
   return (
     <header className={style.header}>
       <div className={style.header__container}>
-        <Link
+        <NavLink
           to="/articles"
-          className={`${style.header__container__btn} ${style.name__blog}`}
+          className={({ isActive }) =>
+            isActive
+              ? `${style.active} ${style.header__container__btn} ${style.name__blog}`
+              : `${style.header__container__btn} ${style.name__blog}`
+          }
           type="button"
         >
           Realworld Blog
-        </Link>
+        </NavLink>
       </div>
       {isAuth ? (
         <div className={style.header__container}>
-          <Link
+          <NavLink
             to="/new-article"
-            className={`${style.header__container__btn} ${style.create_article}`}
+            className={({ isActive }) =>
+              isActive
+                ? `${style.header__container__btn} ${style.create_article_activ}`
+                : `${style.header__container__btn} ${style.create_article}`
+            }
             type="button"
           >
             Create article
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/profile"
-            className={`${style.header__container__btn} ${style.username}`}
+            className={({ isActive }) =>
+              isActive
+                ? `${style.header__container__btn} ${style.username} ${style.active}`
+                : `${style.header__container__btn} ${style.username}`
+            }
             type="button"
           >
             <span className={style.username_span}>{username}</span>
@@ -56,32 +70,44 @@ export default function Header() {
               src={image || avatar}
               alt="avatar"
             />
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/articles"
-            className={`${style.header__container__btn} ${style.logout}`}
+            className={({ isActive }) =>
+              isActive
+                ? `${style.header__container__btn} ${style.logout} ${style.active}`
+                : `${style.header__container__btn} ${style.logout}`
+            }
             type="button"
             onClick={handleLogout}
           >
             Log Out
-          </Link>
+          </NavLink>
         </div>
       ) : (
         <div className={style.header__container}>
-          <Link
+          <NavLink
             to="/sign-in"
-            className={`${style.header__container__btn} ${style.sign__in}`}
+            className={({ isActive }) =>
+              isActive
+                ? `${style.header__container__btn} ${style.sign__in} ${style.active}`
+                : `${style.header__container__btn} ${style.sign__in}`
+            }
             type="button"
           >
             Sign In
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/sign-up"
-            className={`${style.header__container__btn} ${style.sign__up}`}
+            className={({ isActive }) =>
+              isActive
+                ? `${style.header__container__btn}  ${style.sign__up_activ}`
+                : `${style.header__container__btn} ${style.sign__up}`
+            }
             type="button"
           >
             Sign Up
-          </Link>
+          </NavLink>
         </div>
       )}
     </header>
