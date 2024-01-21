@@ -212,22 +212,19 @@ export async function getProfile(username, token) {
       headers,
     })
     if (!response.ok) {
-      console.log(response)
       throw new Error(`Ошибка при получении профиля: ${response.status}`)
     }
     const data = await response.json()
     return data.profile
   } catch (error) {
-    console.error(`Ошибка в getProfile: ${error.message}`)
+    message.error(`Ошибка в getProfile: ${error.message}`)
     throw error
   }
 }
 
 export async function updateArticle(slug, articleData, token) {
   try {
-    console.log(slug, articleData, token)
     const url = `${BASE_URL}/articles/${slug}`
-    // const url = new URL(`/articles/${slug}`, BASE_URL)
     const headers = {
       'Content-Type': 'application/json',
       Authorization: `Token ${token}`,
@@ -238,7 +235,6 @@ export async function updateArticle(slug, articleData, token) {
       body: JSON.stringify({ article: articleData }),
     })
     if (!response.ok) {
-      console.error(response)
       throw new Error(`updateArticle Error: ${response.status}`)
     }
     const data = await response.json()
@@ -246,7 +242,6 @@ export async function updateArticle(slug, articleData, token) {
     return data
   } catch (error) {
     message.error(`Error in updateArticle: ${error.message}`)
-    console.error(`Error in updateArticle: ${error.message}`)
     throw error
   }
 }

@@ -25,7 +25,7 @@ export const dellArticle = createAsyncThunk(
 )
 
 export const updateArticleAsync = createAsyncThunk(
-  'article/reductionArticle',
+  'article/updateArticleAsync',
   async ({ slug, articleData, token }) => {
     const response = await updateArticle(slug, articleData, token)
     return response
@@ -33,7 +33,7 @@ export const updateArticleAsync = createAsyncThunk(
 )
 
 export const addFavorite = createAsyncThunk(
-  'likes/addFavorite',
+  'article/addFavorite',
   async ({ slug, token }) => {
     const article = await postFavorite(slug, token)
     return article
@@ -41,7 +41,7 @@ export const addFavorite = createAsyncThunk(
 )
 
 export const removeFavorite = createAsyncThunk(
-  'likes/removeFavorite',
+  'article/removeFavorite',
   async ({ slug, token }) => {
     const article = await deleteFavorite(slug, token)
     return article
@@ -52,23 +52,21 @@ const articleSlice = createSlice({
   name: 'article',
   initialState: {
     article: {
-      article: {
-        author: {
-          username: null,
-          bio: null,
-          image: null,
-          following: null,
-        },
-        body: null,
-        createdAt: null,
-        description: null,
-        favorited: null,
-        favoritesCount: null,
-        slug: null,
-        tagList: null,
-        title: null,
-        updatedAt: null,
+      author: {
+        username: null,
+        bio: null,
+        image: null,
+        following: null,
       },
+      body: null,
+      createdAt: null,
+      description: null,
+      favorited: false,
+      favoritesCount: 0,
+      slug: null,
+      tagList: null,
+      title: null,
+      updatedAt: null,
     },
     delete: false,
     loading: true,
@@ -91,7 +89,7 @@ const articleSlice = createSlice({
       .addCase(fetchArticle.fulfilled, (state, action) => ({
         ...state,
         status: 'resolved',
-        article: action.payload,
+        article: action.payload.article,
         loading: false,
       }))
       .addCase(fetchArticle.rejected, (state, action) => ({
@@ -133,7 +131,7 @@ const articleSlice = createSlice({
   },
 })
 
-export const selectArticle = (state) => state.article.article.article
+export const selectArticle = (state) => state.article.article
 export const selectError = (state) => state.article.error
 export const selectDelete = (state) => state.article.delete
 export const selectLoadingArticle = (state) => state.article.loading

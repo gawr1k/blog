@@ -20,11 +20,10 @@ const initialState = {
 }
 
 export const loginUser = createAsyncThunk(
-  'user/login',
+  'user/loginUser',
   async ({ email, password }) => {
     try {
       const user = await postLoginUser(email, password)
-      console.log(user)
       return user
     } catch (error) {
       message.error('Failed to log in. Please try again.')
@@ -34,16 +33,15 @@ export const loginUser = createAsyncThunk(
 )
 
 export const registerUser = createAsyncThunk(
-  'auth/registerUser',
+  'user/registerUser',
   async (userData) => {
     const response = await postRegisterUser(userData)
-    console.log(response)
     return response
   }
 )
 
 export const fetchGetProfile = createAsyncThunk(
-  'article/dellArticle',
+  'user/fetchGetProfile',
   async ({ username, token }) => {
     const response = await getProfile(username, token)
     return response
@@ -51,7 +49,7 @@ export const fetchGetProfile = createAsyncThunk(
 )
 
 export const editProfile = createAsyncThunk(
-  'profile/editProfile',
+  'user/editProfile',
   async (userData) => {
     try {
       const response = await putUserProfile(userData)

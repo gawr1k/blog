@@ -21,7 +21,7 @@ export default function Header() {
     dispatch(logoutUser())
   }
   useEffect(() => {
-    if (status === 'succeeded') {
+    if (isAuth && status === 'succeeded') {
       dispatch(fetchGetProfile({ username, token }))
     }
   }, [status, dispatch])

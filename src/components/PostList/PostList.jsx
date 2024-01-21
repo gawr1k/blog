@@ -1,5 +1,5 @@
 import { Pagination, Spin } from 'antd'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import ResultErr from '../ResultErr/ResultErr.jsx'
@@ -9,16 +9,18 @@ import {
   selectPosts,
   selectLoadingPosts,
   selectError,
+  selectPage,
+  setCurrentPage,
 } from '../../store/slices/postsSlice.js'
 import Post from '../Post/Post.jsx'
 
 import style from './PostList.module.scss'
 
 export default function PostList() {
-  const [currentPage, setCurrentPage] = useState(1)
   const loading = useSelector(selectLoadingPosts)
   const dispatch = useDispatch()
   const token = useSelector(selectToken)
+  const currentPage = useSelector(selectPage)
   const status = useSelector(selectStatus)
   const posts = useSelector(selectPosts)
   const error = useSelector(selectError)
@@ -49,7 +51,7 @@ export default function PostList() {
           <Pagination
             current={currentPage}
             total={posts.articlesCount * 2}
-            onChange={(page) => setCurrentPage(page)}
+            onChange={(page) => dispatch(setCurrentPage(page))}
           />
         </div>
       </>

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Button, Col, Form, Input } from 'antd'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -50,7 +49,6 @@ function EditArticle() {
       body: values.body,
       tagList,
     }
-    console.log(articleData)
     await dispatch(
       updateArticleAsync({
         slug,

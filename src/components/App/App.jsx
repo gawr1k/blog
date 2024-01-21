@@ -13,16 +13,28 @@ import Profile from '../Profile/Profile.jsx'
 import NewArticle from '../NewArticle/NewArticle.jsx'
 import EditArticle from '../EditArticle/EditArticle.jsx'
 import { setLoginUser } from '../../store/slices/loginSlice.js'
+import { setCurrentPage } from '../../store/slices/postsSlice.js'
 
 function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
-    if (storedUser !== null && storedUser !== undefined) {
-      const parsedUser = JSON.parse(storedUser)
-      dispatch(setLoginUser(parsedUser))
+    const currentPage = sessionStorage.getItem('currentPage')
+    switch (storedUser) {
+      case null:
+        dispatch(setLoginUser({}))
+        break
+      case undefined:
+        dispatch(setLoginUser({}))
+        break
+      default: {
+        const parsedUser = JSON.parse(storedUser)
+        dispatch(setLoginUser(parsedUser))
+        break
+      }
     }
+    dispatch(setCurrentPage(currentPage))
   }, [dispatch])
 
   return (

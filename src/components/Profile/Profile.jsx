@@ -9,7 +9,7 @@ import style from './Profile.module.scss'
 
 function Profile() {
   const dispatch = useDispatch()
-  const { token } = useAuth()
+  const { email, token, username, image } = useAuth()
   const {
     register,
     handleSubmit,
@@ -31,6 +31,7 @@ function Profile() {
             required: true,
             minLength: 1,
           })}
+          defaultValue={username}
           placeholder="Username"
         />
         {errors.username && <p className={style.error}>Введите новое имя</p>}
@@ -44,6 +45,7 @@ function Profile() {
             required: true,
             pattern: /^\S+@\S+$/,
           })}
+          defaultValue={email}
           placeholder="Email address"
         />
         {errors.email && <p className={style.error}>Неверный email</p>}
@@ -70,6 +72,7 @@ function Profile() {
           {...register('image', {
             pattern: /^https?:\/\/.+\..+$/,
           })}
+          defaultValue={image}
           placeholder="Avatar image"
         />
         {errors.avatarURL && (

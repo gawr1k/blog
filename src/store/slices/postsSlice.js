@@ -17,8 +17,14 @@ const postsSlice = createSlice({
     status: null,
     error: null,
     loading: true,
+    page: 1,
   },
-  reducers: {},
+  reducers: {
+    setCurrentPage(state, action) {
+      state.page = action.payload
+      sessionStorage.setItem('currentPage', action.payload)
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPosts.pending, (state) => ({
@@ -45,4 +51,6 @@ const postsSlice = createSlice({
 export const selectLoadingPosts = (state) => state.posts.loading
 export const selectPosts = (state) => state.posts.posts
 export const selectError = (state) => state.posts.error
+export const selectPage = (state) => state.posts.page
+export const { setCurrentPage } = postsSlice.actions
 export default postsSlice.reducer
