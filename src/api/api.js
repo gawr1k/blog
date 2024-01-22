@@ -2,10 +2,11 @@ import { message } from 'antd'
 
 const BASE_URL = 'https://blog.kata.academy/api/'
 
-export async function getArticles(page = 1, token = null) {
+export async function getArticles(page, token = null) {
+  const newPage = page || 1
   try {
-    const offset = (page - 1) * 5
-    const url = new URL('articles', BASE_URL)
+    const offset = (newPage - 1) * 5
+    const url = new URL('/api/articles', BASE_URL)
     url.searchParams.set('limit', 5)
     url.searchParams.set('offset', offset)
     const headers = {
