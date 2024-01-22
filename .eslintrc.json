@@ -6,12 +6,15 @@
   "ignorePatterns": ["node_modules", "dist", "build"],
   "extends": [
     "eslint:recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:react/jsx-runtime",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "plugin:import/recommended",
     "eslint-config-prettier",
-    "prettier",
-    "airbnb"
+    "plugin:jsx-a11y/recommended",
+    "plugin:import/recommended",
+    "airbnb",
+    "prettier"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -22,12 +25,9 @@
   },
   "plugins": ["react", "prettier", "import"],
   "rules": {
-    "no-param-reassign": "off",
-    "no-nested-ternary": "off",
-    "indent": "off",
-    "react/jsx-wrap-multilines": "off",
-    "object-curly-newline": "off",
-    "import/extensions": ["error", "always", { "ignorePackages": true }],
+    "import/extensions": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/jsx-no-constructed-context-values": "off",
     "operator-linebreak": "off",
     "comma-dangle": "off",
@@ -39,9 +39,11 @@
     "react/prop-types": 0,
     "implicit-arrow-linebreak": "off",
     "import/no-unresolved": [2, { "caseSensitive": false }],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-wrap-multilines": "off",
+    "indent": "off",
+    "object-curly-newline": "off",
+    "no-nested-ternary": "off",
     "react/no-array-index-key": "off",
-    "react/jsx-props-no-spreading": "off",
     "import/order": [
       2,
       {

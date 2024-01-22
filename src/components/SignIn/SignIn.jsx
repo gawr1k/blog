@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button } from 'antd'
 import { useDispatch } from 'react-redux'
 
-import { loginUser } from '../../store/slices/loginSlice.js'
+import { loginUser } from '../../store/slices/loginSlice'
 
 import style from './SignIn.module.scss'
 

@@ -2,8 +2,8 @@ import { Pagination, Spin } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import ResultErr from '../ResultErr/ResultErr.jsx'
-import { selectToken, selectStatus } from '../../store/slices/loginSlice.js'
+import ResultErr from '../ResultErr/ResultErr'
+import { selectToken, selectStatus } from '../../store/slices/loginSlice'
 import {
   fetchPosts,
   selectPosts,
@@ -11,8 +11,8 @@ import {
   selectError,
   selectPage,
   setCurrentPage,
-} from '../../store/slices/postsSlice.js'
-import Post from '../Post/Post.jsx'
+} from '../../store/slices/postsSlice'
+import Post from '../Post/Post'
 
 import style from './PostList.module.scss'
 
@@ -49,7 +49,7 @@ export default function PostList() {
         ))}
         <div className={style.container__pagination}>
           <Pagination
-            current={currentPage}
+            current={currentPage || 1}
             total={posts.articlesCount * 2}
             onChange={(page) => dispatch(setCurrentPage(page))}
           />

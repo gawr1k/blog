@@ -67,22 +67,29 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     logoutUser: (state) => {
-      state.user = {
-        email: null,
-        token: null,
-        username: null,
-      }
       localStorage.removeItem('user')
+      return {
+        ...state,
+        user: {
+          email: null,
+          token: null,
+          username: null,
+          image: null,
+        },
+      }
     },
     setLoginUser: (state, action) => {
       const { email, token, username, image } = action.payload
-      state.user = {
-        email: email || null,
-        token: token || null,
-        username: username || null,
-        image: image || null,
+      return {
+        ...state,
+        user: {
+          email: email || null,
+          token: token || null,
+          username: username || null,
+          image: image || null,
+        },
+        status: 'succeeded',
       }
-      state.status = 'succeeded'
     },
   },
   extraReducers: (builder) => {

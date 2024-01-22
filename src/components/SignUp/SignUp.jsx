@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button, Checkbox } from 'antd'
 import { useDispatch } from 'react-redux'
 
-import { registerUser } from '../../store/slices/loginSlice.js'
+import { registerUser } from '../../store/slices/loginSlice'
 
 import style from './SignUp.module.scss'
 

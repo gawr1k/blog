@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-curly-newline */
-/* eslint-disable no-confusing-arrow */
 import { NavLink } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,8 +7,8 @@ import {
   selectStatus,
   logoutUser,
   fetchGetProfile,
-} from '../../store/slices/loginSlice.js'
-import useAuth from '../../hooks/use-auth.js'
+} from '../../store/slices/loginSlice'
+import useAuth from '../../hooks/use-auth'
 
 import style from './Header.module.scss'
 
@@ -75,7 +73,7 @@ export default function Header() {
             to="/articles"
             className={({ isActive }) =>
               isActive
-                ? `${style.header__container__btn} ${style.logout} ${style.active}`
+                ? `${style.header__container__btn} ${style.logout} `
                 : `${style.header__container__btn} ${style.logout}`
             }
             type="button"

@@ -2,23 +2,22 @@ import { Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import PostList from '../PostList/PostList.jsx'
-import Slug from '../Slug/Slug.jsx'
-import SignIn from '../SignIn/SignIn.jsx'
-import SignUp from '../SignUp/SignUp.jsx'
-import PublicRoute from '../../hooks/PublicRoute.js'
-import PrivateRoute from '../../hooks/PrivateRoute.js'
-import Profile from '../Profile/Profile.jsx'
-import NewArticle from '../NewArticle/NewArticle.jsx'
-import EditArticle from '../EditArticle/EditArticle.jsx'
-import { setLoginUser } from '../../store/slices/loginSlice.js'
-import { setCurrentPage } from '../../store/slices/postsSlice.js'
-import Layout from '../Layout.jsx'
-import NotFoundPage from '../NotFoundPage/NotFoundPage.jsx'
+import PostList from '../PostList/PostList'
+import Slug from '../Slug/Slug'
+import SignIn from '../SignIn/SignIn'
+import SignUp from '../SignUp/SignUp'
+import PublicRoute from '../../hooks/PublicRoute'
+import PrivateRoute from '../../hooks/PrivateRoute'
+import Profile from '../Profile/Profile'
+import { setLoginUser } from '../../store/slices/loginSlice'
+import { setCurrentPage } from '../../store/slices/postsSlice'
+import Layout from '../Layout'
+import NotFoundPage from '../NotFoundPage/NotFoundPage'
+import Create from '../Create/Create'
+import Edit from '../Edit/Edit'
 
 function App() {
   const dispatch = useDispatch()
-
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
     const currentPage = sessionStorage.getItem('currentPage')
@@ -35,6 +34,7 @@ function App() {
         break
       }
     }
+
     dispatch(setCurrentPage(currentPage))
   }, [dispatch])
 
@@ -48,10 +48,11 @@ function App() {
           path="articles/:slug/edit"
           element={
             <PrivateRoute>
-              <EditArticle />
+              <Edit />
             </PrivateRoute>
           }
         />
+
         <Route
           path="/sign-in"
           element={
@@ -80,7 +81,7 @@ function App() {
           path="/new-article"
           element={
             <PrivateRoute>
-              <NewArticle />
+              <Create />
             </PrivateRoute>
           }
         />

@@ -2,8 +2,8 @@ import { useForm } from 'react-hook-form'
 import { Button } from 'antd'
 import { useDispatch } from 'react-redux'
 
-import useAuth from '../../hooks/use-auth.js'
-import { editProfile } from '../../store/slices/loginSlice.js'
+import useAuth from '../../hooks/use-auth'
+import { editProfile } from '../../store/slices/loginSlice'
 
 import style from './Profile.module.scss'
 

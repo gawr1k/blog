@@ -21,8 +21,11 @@ const postsSlice = createSlice({
   },
   reducers: {
     setCurrentPage(state, action) {
-      state.page = action.payload
       sessionStorage.setItem('currentPage', action.payload)
+      return {
+        ...state,
+        page: action.payload,
+      }
     },
   },
   extraReducers: (builder) => {

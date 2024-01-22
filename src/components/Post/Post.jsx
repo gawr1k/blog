@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { addFavorite, removeFavorite } from '../../store/slices/articleSlice.js'
-import useAuth from '../../hooks/use-auth.js'
+import { addFavorite, removeFavorite } from '../../store/slices/articleSlice'
+import useAuth from '../../hooks/use-auth'
 import like from '../../assets/like__icon.svg'
 import activeLike from '../../assets/Heart_corazón 1.svg'
 

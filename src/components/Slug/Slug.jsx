@@ -4,8 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { Spin, Button, Popconfirm } from 'antd'
 
-import ResultErr from '../ResultErr/ResultErr.jsx'
-import useAuth from '../../hooks/use-auth.js'
+import ResultErr from '../ResultErr/ResultErr'
+import useAuth from '../../hooks/use-auth'
 import {
   selectArticle,
   selectLoadingArticle,
@@ -16,8 +16,9 @@ import {
   deleteInitial,
   addFavorite,
   removeFavorite,
-} from '../../store/slices/articleSlice.js'
-import { selectStatus } from '../../store/slices/loginSlice.js'
+  resetZeroArticleState,
+} from '../../store/slices/articleSlice'
+import { selectStatus } from '../../store/slices/loginSlice'
 import like from '../../assets/like__icon.svg'
 import activeLike from '../../assets/Heart_corazón 1.svg'
 
@@ -33,11 +34,11 @@ export default function Slug() {
   const { slug } = useParams()
   const { isAuth, token, username } = useAuth()
 
-  const [liked, setLiked] = useState(article.favorited)
-  const [likeCount, setLikeCount] = useState(article.favoritesCount)
+  const [liked, setLiked] = useState()
+  const [likeCount, setLikeCount] = useState()
   const likeIconSrc = liked ? activeLike : like
-  const [authorArticle, setAuthurArticle] = useState(article.author.username)
-  const [editable, setEditable] = useState(authorArticle === username)
+  const [authorArticle, setAuthurArticle] = useState('')
+  const [editable, setEditable] = useState()
   const navigate = useNavigate()
   const dell = useSelector(selectDelete)
 
@@ -56,7 +57,7 @@ export default function Slug() {
   }, [article])
 
   useEffect(() => {
-    setAuthurArticle(article.author.username)
+    setAuthurArticle(article.author?.username || ' ')
     setEditable(authorArticle === username)
   }, [article, authorArticle])
 
@@ -69,6 +70,13 @@ export default function Slug() {
       dispatch(deleteInitial())
     }
   }, [dell])
+
+  useEffect(
+    () => () => {
+      dispatch(resetZeroArticleState())
+    },
+    [dispatch]
+  )
 
   const handleClick = () => {
     switch (liked) {
@@ -119,11 +127,11 @@ export default function Slug() {
               </div>
             )}
           </div>
-          {article.tagList.map((tag, index) => (
+          {article.tagList?.map((tag, index) => (
             <span key={`tag-${index}`} className={style.tag}>
               {tag}
             </span>
-          ))}
+          )) || []}
           <p className={style.description}>{article.description}</p>
           <div className={style.body}>
             <ReactMarkdown>{article.body}</ReactMarkdown>
@@ -133,18 +141,19 @@ export default function Slug() {
       <div className={style.wrapping}>
         <div className={style.container__bio}>
           <div className={style.container__name__data}>
-            <h3 className={style.name}>{article.author.username}</h3>
+            <h3 className={style.name}>{article.author?.username || ''}</h3>
             <h5 className={style.data}>
-              {new Intl.DateTimeFormat('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              }).format(new Date(article.createdAt))}
+              {article?.createdAt &&
+                new Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                }).format(new Date(article.createdAt))}
             </h5>
           </div>
           <img
             className={style.avatar}
-            src={article.author.image}
+            src={article.author?.image}
             alt="Author Avatar"
           />
         </div>

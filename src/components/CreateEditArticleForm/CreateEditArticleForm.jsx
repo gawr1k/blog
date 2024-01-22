@@ -1,26 +1,19 @@
 import { Button, Col, Form, Input } from 'antd'
-import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
 
-import useAuth from '../../hooks/use-auth.js'
-import {
-  selectArticle,
-  selectLoadingArticle,
-  updateArticleAsync,
-} from '../../store/slices/articleSlice.js'
+import useAuth from '../../hooks/use-auth'
+import { selectLoadingArticle } from '../../store/slices/articleSlice'
 
-import style from './EditArticle.module.scss'
+import style from './CreateEditArticleForm.module.scss'
 
-function EditArticle() {
+function CreateEditArticleForm({ asyncEditCreatArticleFunc, article, slug }) {
   const dispatch = useDispatch()
-  const article = useSelector(selectArticle)
   const loadingState = useSelector(selectLoadingArticle)
   const [inputValues, setInputValues] = useState(article.tagList || [])
   const { TextArea } = Input
   const [form] = Form.useForm()
   const { token } = useAuth()
-  const { slug } = useParams()
 
   const handleInputChange = (index, value) => {
     const newInputValues = [...inputValues]
@@ -50,10 +43,10 @@ function EditArticle() {
       tagList,
     }
     await dispatch(
-      updateArticleAsync({
+      asyncEditCreatArticleFunc({
+        jwtToken: token,
+        article: articleData,
         slug,
-        articleData,
-        token,
       })
     )
   }
@@ -197,4 +190,4 @@ function EditArticle() {
   )
 }
 
-export default EditArticle
+export default CreateEditArticleForm

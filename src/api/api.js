@@ -114,30 +114,6 @@ export async function postRegisterUser(userData) {
   }
 }
 
-export async function postCreateArticle(jwtToken, articleData) {
-  const url = new URL('articles', BASE_URL)
-  const headers = {
-    Authorization: `Bearer ${jwtToken}`,
-    'Content-Type': 'application/json',
-  }
-  const requestOptions = {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ article: articleData }),
-  }
-  try {
-    const response = await fetch(url, requestOptions)
-    if (!response.ok) {
-      throw new Error(`createArticle Error: ${response.status}`)
-    }
-    const responseData = await response.json()
-    return responseData
-  } catch (error) {
-    message.error('Failed to create article. Please try again.')
-    throw error
-  }
-}
-
 export async function postFavorite(slug, token) {
   try {
     const url = new URL(`articles/${slug}/favorite`, BASE_URL)
@@ -222,12 +198,12 @@ export async function getProfile(username, token) {
   }
 }
 
-export async function updateArticle(slug, articleData, token) {
+export async function updateArticle(jwtToken, articleData, slug) {
   try {
     const url = `${BASE_URL}/articles/${slug}`
     const headers = {
       'Content-Type': 'application/json',
-      Authorization: `Token ${token}`,
+      Authorization: `Token ${jwtToken}`,
     }
     const response = await fetch(url, {
       method: 'PUT',
@@ -242,6 +218,31 @@ export async function updateArticle(slug, articleData, token) {
     return data
   } catch (error) {
     message.error(`Error in updateArticle: ${error.message}`)
+    throw error
+  }
+}
+
+export async function postCreateArticle(jwtToken, articleData) {
+  const url = new URL('articles', BASE_URL)
+  const headers = {
+    Authorization: `Bearer ${jwtToken}`,
+    'Content-Type': 'application/json',
+  }
+  const requestOptions = {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ article: articleData }),
+  }
+  try {
+    const response = await fetch(url, requestOptions)
+    if (!response.ok) {
+      throw new Error(`createArticle Error: ${response.status}`)
+    }
+    const responseData = await response.json()
+    message.success('Create article successful!')
+    return responseData
+  } catch (error) {
+    message.error('Failed to create article. Please try again.')
     throw error
   }
 }

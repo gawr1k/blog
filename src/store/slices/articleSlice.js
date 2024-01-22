@@ -1,12 +1,38 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { message } from 'antd'
 
 import {
   getArticle,
-  deleteArticle,
-  updateArticle,
   postFavorite,
   deleteFavorite,
+  deleteArticle,
+  postCreateArticle,
+  updateArticle,
 } from '../../api/api.js'
+
+const initialState = {
+  article: {
+    author: {
+      username: '',
+      bio: null,
+      image: '',
+      following: null,
+    },
+    body: '',
+    createdAt: '',
+    description: '',
+    favorited: false,
+    favoritesCount: 0,
+    slug: '',
+    tagList: [],
+    title: '',
+    updatedAt: '',
+  },
+  delete: false,
+  loading: false,
+  status: null,
+  error: null,
+}
 
 export const fetchArticle = createAsyncThunk(
   'article/fetchArticle',
@@ -26,8 +52,8 @@ export const dellArticle = createAsyncThunk(
 
 export const updateArticleAsync = createAsyncThunk(
   'article/updateArticleAsync',
-  async ({ slug, articleData, token }) => {
-    const response = await updateArticle(slug, articleData, token)
+  async ({ jwtToken, article, slug }) => {
+    const response = await updateArticle(jwtToken, article, slug)
     return response
   }
 )
@@ -48,35 +74,28 @@ export const removeFavorite = createAsyncThunk(
   }
 )
 
+export const createArticleAsync = createAsyncThunk(
+  'article/createArticleAsync',
+  async ({ jwtToken, article }) => {
+    try {
+      const createdArticle = await postCreateArticle(jwtToken, article)
+      return createdArticle
+    } catch (error) {
+      message.error('createArticle Error:', error)
+      throw error
+    }
+  }
+)
+
 const articleSlice = createSlice({
   name: 'article',
-  initialState: {
-    article: {
-      author: {
-        username: null,
-        bio: null,
-        image: null,
-        following: null,
-      },
-      body: null,
-      createdAt: null,
-      description: null,
-      favorited: false,
-      favoritesCount: 0,
-      slug: null,
-      tagList: null,
-      title: null,
-      updatedAt: null,
-    },
-    delete: false,
-    loading: true,
-    status: null,
-    error: null,
-  },
+  initialState,
   reducers: {
-    deleteInitial: (state) => {
-      state.delete = false
-    },
+    deleteInitial: (state) => ({
+      ...state,
+      delete: false,
+    }),
+    resetZeroArticleState: () => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -110,7 +129,7 @@ const articleSlice = createSlice({
       }))
       .addCase(updateArticleAsync.fulfilled, (state, action) => ({
         ...state,
-        status: 'resolved',
+        status: 'succeeded',
         article: action.payload,
         loading: false,
       }))
@@ -128,13 +147,34 @@ const articleSlice = createSlice({
         ...state,
         article: action.payload,
       }))
+      .addCase(createArticleAsync.pending, (state) => ({
+        ...state,
+        status: 'loading',
+        loading: true,
+        error: null,
+        createdArticle: false,
+      }))
+      .addCase(createArticleAsync.fulfilled, (state, action) => ({
+        ...state,
+        status: 'succeeded',
+        loading: false,
+        article: action.payload.article,
+      }))
+      .addCase(createArticleAsync.rejected, (state, action) => ({
+        ...state,
+        status: 'rejected',
+        loading: false,
+        error: action.payload,
+      }))
   },
 })
 
 export const selectArticle = (state) => state.article.article
+export const selectSlugArticle = (state) => state.article.article.slug
 export const selectError = (state) => state.article.error
+export const selectStatusArticle = (state) => state.article.status
 export const selectDelete = (state) => state.article.delete
 export const selectLoadingArticle = (state) => state.article.loading
-export const { deleteInitial } = articleSlice.actions
+export const { deleteInitial, resetZeroArticleState } = articleSlice.actions
 
 export default articleSlice.reducer
