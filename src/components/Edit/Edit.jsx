@@ -14,6 +14,7 @@ function Edit() {
   const { slug } = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const titleText = 'Edit article'
 
   const status = useSelector(selectStatusArticle)
   const article = useSelector(selectArticle)
@@ -33,6 +34,7 @@ function Edit() {
       asyncEditCreatArticleFunc={updateArticleAsync}
       slug={slug}
       article={article}
+      titleText={titleText}
     />
   )
 }

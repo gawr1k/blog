@@ -7,7 +7,12 @@ import { selectLoadingArticle } from '../../store/slices/articleSlice'
 
 import style from './CreateEditArticleForm.module.scss'
 
-function CreateEditArticleForm({ asyncEditCreatArticleFunc, article, slug }) {
+function CreateEditArticleForm({
+  asyncEditCreatArticleFunc,
+  article,
+  slug,
+  titleText,
+}) {
   const dispatch = useDispatch()
   const loadingState = useSelector(selectLoadingArticle)
   const [inputValues, setInputValues] = useState(article.tagList || [])
@@ -63,7 +68,7 @@ function CreateEditArticleForm({ asyncEditCreatArticleFunc, article, slug }) {
       className={style.form}
       form={form}
     >
-      <h1 className={style.title}>Create new article</h1>
+      <h1 className={style.title}>{titleText}</h1>
       <Col>
         <span className={style.span}>Title</span>
         <Form.Item

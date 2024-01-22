@@ -15,6 +15,7 @@ function Create() {
   const status = useSelector(selectStatusArticle)
   const slug = useSelector(selectSlugArticle)
   const dispatch = useDispatch()
+  const titleText = 'Create new article'
   useEffect(() => {
     if (status === 'succeeded') {
       navigate(`/articles/${slug}`)
@@ -33,6 +34,7 @@ function Create() {
       asyncEditCreatArticleFunc={createArticleAsync}
       article={{}}
       slug={{}}
+      titleText={titleText}
     />
   )
 }
