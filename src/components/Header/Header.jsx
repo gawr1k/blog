@@ -14,15 +14,21 @@ import {
   selectStatus,
   logoutUser,
   fetchGetProfile,
+  selectToken,
+  selectUserName,
+  selectImageUser,
 } from '../../store/slices/loginSlice'
 import useAuth from '../../hooks/use-auth'
 
 import style from './Header.module.scss'
 
 export default function Header() {
-  const { isAuth, username, token, image } = useAuth()
+  const { isAuth } = useAuth()
   const dispatch = useDispatch()
   const status = useSelector(selectStatus)
+  const image = useSelector(selectImageUser)
+  const username = useSelector(selectUserName)
+  const token = useSelector(selectToken)
   const [imgError, setImgError] = useState(false)
 
   const handleLogout = () => {
@@ -30,7 +36,7 @@ export default function Header() {
   }
   useEffect(() => {
     if (isAuth && status === 'succeeded') {
-      dispatch(fetchGetProfile({ username, token }))
+      dispatch(fetchGetProfile({ token }))
     }
   }, [status, dispatch])
 

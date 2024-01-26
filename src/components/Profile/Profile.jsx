@@ -1,15 +1,27 @@
 import { useForm } from 'react-hook-form'
 import { Button } from 'antd'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import useAuth from '../../hooks/use-auth'
-import { editProfile } from '../../store/slices/loginSlice'
+import {
+  selectToken,
+  editProfile,
+  selectUserName,
+  selectImageUser,
+  selectEmail,
+} from '../../store/slices/loginSlice'
 
 import style from './Profile.module.scss'
 
 function Profile() {
   const dispatch = useDispatch()
-  const { email, token, username, image } = useAuth()
+  const token = useSelector(selectToken)
+  const username = useSelector(selectUserName)
+  const email = useSelector(selectEmail)
+  const image = useSelector(selectImageUser)
+  console.log(image)
+  console.log(token)
+  console.log(username)
+
   const {
     register,
     handleSubmit,

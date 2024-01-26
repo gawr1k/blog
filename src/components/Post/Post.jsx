@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { PATH_POST } from '../../routes'
 import { addFavorite, removeFavorite } from '../../store/slices/articleSlice'
@@ -8,16 +8,18 @@ import useAuth from '../../hooks/use-auth'
 import like from '../../assets/like__icon.svg'
 import activeLike from '../../assets/Heart_corazón 1.svg'
 import avatar from '../../assets/smiley-cyrus.jpg'
+import { selectToken } from '../../store/slices/loginSlice'
 
 import style from './Post.module.scss'
 
 export default function Post({ post }) {
   const [liked, setLiked] = useState(post.favorited)
   const [likeCount, setLikeCount] = useState(post.favoritesCount)
-  const { isAuth, token } = useAuth()
+  const { isAuth } = useAuth()
   const dispatch = useDispatch()
   const likeIconSrc = liked ? activeLike : like
   const [imgError, setImgError] = useState(false)
+  const token = useSelector(selectToken)
 
   const handleClick = () => {
     switch (liked) {

@@ -110,7 +110,7 @@ export async function postRegisterUser(userData) {
     })
     if (!response.ok) {
       const errorData = await response.json()
-      throw new Error(errorData.errors.error.status)
+      throw new Error(errorData.errors.email || errorData.errors.username)
     }
     const data = await response.json()
     message.success('Registration successful!')
@@ -184,9 +184,9 @@ export async function deleteArticle(slug, token) {
   }
 }
 
-export async function getProfile(username, token) {
+export async function getProfile(token) {
   try {
-    const url = `${BASE_URL}/profiles/${username}`
+    const url = `${BASE_URL}/user`
     const headers = {
       Authorization: `Token ${token}`,
     }
@@ -198,7 +198,8 @@ export async function getProfile(username, token) {
       throw new Error(`Ошибка при получении профиля: ${response.status}`)
     }
     const data = await response.json()
-    return data.profile
+    console.log(data)
+    return data.user
   } catch (error) {
     message.error(`Ошибка в getProfile: ${error.message}`)
     throw error

@@ -2,8 +2,8 @@ import { Button, Col, Form, Input } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
 
-import useAuth from '../../hooks/use-auth'
 import { selectLoadingArticle } from '../../store/slices/articleSlice'
+import { selectToken } from '../../store/slices/loginSlice'
 
 import style from './CreateEditArticleForm.module.scss'
 
@@ -18,7 +18,7 @@ function CreateEditArticleForm({
   const [inputValues, setInputValues] = useState(article.tagList || [])
   const { TextArea } = Input
   const [form] = Form.useForm()
-  const { token } = useAuth()
+  const token = useSelector(selectToken)
 
   const handleInputChange = (index, value) => {
     const newInputValues = [...inputValues]

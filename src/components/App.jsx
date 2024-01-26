@@ -32,22 +32,21 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user')
+    const storedUser = localStorage.getItem('token')
     const currentPage = sessionStorage.getItem('currentPage')
     switch (storedUser) {
       case null:
-        dispatch(setLoginUser({}))
+        dispatch(setLoginUser(null))
         break
       case undefined:
-        dispatch(setLoginUser({}))
+        dispatch(setLoginUser(null))
         break
       default: {
-        const parsedUser = JSON.parse(storedUser)
-        dispatch(setLoginUser(parsedUser))
+        dispatch(setLoginUser(storedUser))
+        console.log(storedUser)
         break
       }
     }
-
     dispatch(setCurrentPage(currentPage))
   }, [dispatch])
 

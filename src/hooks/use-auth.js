@@ -1,15 +1,11 @@
 import { useSelector } from 'react-redux'
 
+import { selectToken } from '../store/slices/loginSlice.js'
+
 export default function useAuth() {
-  const { email, token, username, image } = useSelector(
-    (state) => state.user.user
-  )
+  const token = useSelector(selectToken)
 
   return {
-    isAuth: !!email,
-    email,
-    token,
-    username,
-    image,
+    isAuth: !!token,
   }
 }

@@ -4,7 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { Spin, Button, Popconfirm } from 'antd'
 
-// eslint-disable-next-line no-unused-vars
 import { HANDLE_EDIT_CLICK, PATH_ARTICLE } from '../../routes'
 import avatar from '../../assets/smiley-cyrus.jpg'
 import ResultErr from '../ResultErr/ResultErr'
@@ -21,7 +20,11 @@ import {
   removeFavorite,
   resetZeroArticleState,
 } from '../../store/slices/articleSlice'
-import { selectStatus } from '../../store/slices/loginSlice'
+import {
+  selectStatus,
+  selectToken,
+  selectUserName,
+} from '../../store/slices/loginSlice.js'
 import like from '../../assets/like__icon.svg'
 import activeLike from '../../assets/Heart_corazón 1.svg'
 
@@ -30,13 +33,15 @@ import style from './Slug.module.scss'
 export default function Slug() {
   const dispatch = useDispatch()
   const article = useSelector(selectArticle)
+  const token = useSelector(selectToken)
+  const username = useSelector(selectUserName)
   const status = useSelector(selectStatus)
   const error = useSelector(selectError)
   const loading = useSelector(selectLoadingArticle)
   const [imgError, setImgError] = useState(false)
 
   const { slug } = useParams()
-  const { isAuth, token, username } = useAuth()
+  const { isAuth } = useAuth()
 
   const [liked, setLiked] = useState()
   const [likeCount, setLikeCount] = useState()

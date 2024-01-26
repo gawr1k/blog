@@ -37,8 +37,8 @@ export const registerUser = createAsyncThunk(
 
 export const fetchGetProfile = createAsyncThunk(
   'user/fetchGetProfile',
-  async ({ username, token }) => {
-    const response = await getProfile(username, token)
+  async ({ token }) => {
+    const response = await getProfile(token)
     return response
   }
 )
@@ -62,7 +62,7 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     logoutUser: (state) => {
-      localStorage.removeItem('user')
+      localStorage.removeItem('token')
       return {
         ...state,
         user: {
@@ -73,19 +73,16 @@ const loginSlice = createSlice({
         },
       }
     },
-    setLoginUser: (state, action) => {
-      const { email, token, username, image } = action.payload
-      return {
-        ...state,
-        user: {
-          email: email || null,
-          token: token || null,
-          username: username || null,
-          image: image || null,
-        },
-        status: 'succeeded',
-      }
-    },
+    setLoginUser: (state, action) => ({
+      ...state,
+      user: {
+        email: null,
+        token: action.payload,
+        username: null,
+        image: null,
+      },
+      status: 'succeeded',
+    }),
   },
   extraReducers: (builder) => {
     builder
@@ -95,8 +92,8 @@ const loginSlice = createSlice({
         error: null,
       }))
       .addCase(loginUser.fulfilled, (state, action) => {
-        const { user } = action.payload
-        localStorage.setItem('user', JSON.stringify(user))
+        const { token } = action.payload.user
+        localStorage.setItem('token', token)
         return {
           ...state,
           status: 'succeeded',
@@ -128,8 +125,8 @@ const loginSlice = createSlice({
         status: 'loading',
       }))
       .addCase(registerUser.fulfilled, (state, action) => {
-        const { user } = action.payload
-        localStorage.setItem('user', JSON.stringify(user))
+        const { token } = action.payload.user
+        localStorage.setItem('token', token)
         return {
           ...state,
           status: 'succeeded',
@@ -141,25 +138,20 @@ const loginSlice = createSlice({
         status: 'failed',
         error: action.error.message,
       }))
-      .addCase(fetchGetProfile.fulfilled, (state, action) => {
-        const { image } = action.payload
-        return {
-          ...state,
-          user: {
-            ...state.user,
-            image,
-          },
-          status: 'succeeded',
-          error: action.error ? action.error.message : null,
-        }
-      })
+      .addCase(fetchGetProfile.fulfilled, (state, action) => ({
+        ...state,
+        user: action.payload,
+        status: 'succeeded',
+        error: action.error ? action.error.message : null,
+      }))
       .addCase(editProfile.pending, (state) => ({
         ...state,
         status: 'loading',
       }))
       .addCase(editProfile.fulfilled, (state, action) => {
-        localStorage.removeItem('user')
-        localStorage.setItem('user', JSON.stringify(action.payload))
+        localStorage.removeItem('token')
+        const { token } = action.payload
+        localStorage.setItem('token', token)
         return {
           ...state,
           status: 'succeeded',
@@ -173,7 +165,10 @@ const loginSlice = createSlice({
       }))
   },
 })
+export const selectImageUser = (state) => state.user.user.image
+export const selectEmail = (state) => state.user.user.email
 export const selectToken = (state) => state.user.user.token
+export const selectUserName = (state) => state.user.user.username
 export const selectStatus = (state) => state.user.status
 export const { logoutUser, setLoginUser } = loginSlice.actions
 export default loginSlice.reducer
