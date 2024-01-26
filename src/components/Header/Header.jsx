@@ -73,7 +73,7 @@ export default function Header() {
               <img className={style.username_img} src={avatar} alt="Avatar" />
             ) : (
               <img
-                className={style.avatar}
+                className={style.username_img}
                 src={image || avatar}
                 onError={handleImgError}
                 alt="Author Avatar"

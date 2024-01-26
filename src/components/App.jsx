@@ -53,7 +53,6 @@ function App() {
             </PrivateRoute>
           }
         />
-
         <Route
           path="/sign-in"
           element={

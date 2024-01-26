@@ -4,7 +4,7 @@ import useAuth from '../hooks/use-auth'
 
 function PublicRoute({ children }) {
   const { isAuth } = useAuth()
-  return isAuth ? <Navigate to="/articles" /> : children
+  return isAuth ? <Navigate to="/profile" /> : children
 }
 
 export default PublicRoute
