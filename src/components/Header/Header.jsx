@@ -2,6 +2,13 @@ import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import {
+  PATH_ARTICLE,
+  PATH_NEW_ARTICLE,
+  PATH_PROFILE,
+  PATH_SIGN_IN,
+  PATH_SIGN_UP,
+} from '../../routes'
 import avatar from '../../assets/smiley-cyrus.jpg'
 import {
   selectStatus,
@@ -35,7 +42,7 @@ export default function Header() {
     <header className={style.header}>
       <div className={style.header__container}>
         <NavLink
-          to="/articles"
+          to={PATH_ARTICLE}
           className={({ isActive }) =>
             isActive
               ? `${style.active} ${style.header__container__btn} ${style.name__blog}`
@@ -49,7 +56,7 @@ export default function Header() {
       {isAuth ? (
         <div className={style.header__container}>
           <NavLink
-            to="/new-article"
+            to={PATH_NEW_ARTICLE}
             className={({ isActive }) =>
               isActive
                 ? `${style.header__container__btn} ${style.create_article_activ}`
@@ -60,7 +67,7 @@ export default function Header() {
             Create article
           </NavLink>
           <NavLink
-            to="/profile"
+            to={PATH_PROFILE}
             className={({ isActive }) =>
               isActive
                 ? `${style.header__container__btn} ${style.username} ${style.active}`
@@ -81,7 +88,7 @@ export default function Header() {
             )}
           </NavLink>
           <NavLink
-            to="/articles"
+            to={PATH_ARTICLE}
             className={({ isActive }) =>
               isActive
                 ? `${style.header__container__btn} ${style.logout} `
@@ -96,7 +103,7 @@ export default function Header() {
       ) : (
         <div className={style.header__container}>
           <NavLink
-            to="/sign-in"
+            to={PATH_SIGN_IN}
             className={({ isActive }) =>
               isActive
                 ? `${style.header__container__btn} ${style.sign__in} ${style.active}`
@@ -107,7 +114,7 @@ export default function Header() {
             Sign In
           </NavLink>
           <NavLink
-            to="/sign-up"
+            to={PATH_SIGN_UP}
             className={({ isActive }) =>
               isActive
                 ? `${style.header__container__btn}  ${style.sign__up_activ}`

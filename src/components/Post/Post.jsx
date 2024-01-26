@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { PATH_POST } from '../../routes'
 import { addFavorite, removeFavorite } from '../../store/slices/articleSlice'
 import useAuth from '../../hooks/use-auth'
 import like from '../../assets/like__icon.svg'
@@ -17,6 +18,7 @@ export default function Post({ post }) {
   const dispatch = useDispatch()
   const likeIconSrc = liked ? activeLike : like
   const [imgError, setImgError] = useState(false)
+
   const handleClick = () => {
     switch (liked) {
       case false:
@@ -51,7 +53,7 @@ export default function Post({ post }) {
       <div>
         <div>
           <div className={style.title__container}>
-            <Link to={`/articles/${post.slug}`} className={style.title}>
+            <Link to={PATH_POST(post.slug)} className={style.title}>
               {post.title}
             </Link>
             {isAuth ? (

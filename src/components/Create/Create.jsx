@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
+import { PATH_POST } from '../../routes'
 import {
   createArticleAsync,
   selectStatusArticle,
@@ -18,7 +19,7 @@ function Create() {
   const titleText = 'Create new article'
   useEffect(() => {
     if (status === 'succeeded') {
-      navigate(`/articles/${slug}`)
+      navigate(PATH_POST(slug))
     }
   })
 

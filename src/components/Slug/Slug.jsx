@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { Spin, Button, Popconfirm } from 'antd'
 
+// eslint-disable-next-line no-unused-vars
+import { HANDLE_EDIT_CLICK, PATH_ARTICLE } from '../../routes'
 import avatar from '../../assets/smiley-cyrus.jpg'
 import ResultErr from '../ResultErr/ResultErr'
 import useAuth from '../../hooks/use-auth'
@@ -68,7 +70,7 @@ export default function Slug() {
   }
   useEffect(() => {
     if (dell === true) {
-      navigate('/articles')
+      navigate(PATH_ARTICLE)
       dispatch(deleteInitial())
     }
   }, [dell])
@@ -190,7 +192,7 @@ export default function Slug() {
               }}
               danger
               onClick={() => {
-                navigate(`/articles/${slug}/edit`)
+                HANDLE_EDIT_CLICK(slug, navigate)
               }}
             >
               Edit

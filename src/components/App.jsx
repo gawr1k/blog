@@ -4,6 +4,17 @@ import { useDispatch } from 'react-redux'
 
 import { setLoginUser } from '../store/slices/loginSlice'
 import { setCurrentPage } from '../store/slices/postsSlice'
+import {
+  PATH_HOME,
+  PATH_ARTICLE,
+  PATH_SLUG,
+  PATH_SLUG_EDIT,
+  PATH_SIGN_IN,
+  PATH_SIGN_UP,
+  PATH_PROFILE,
+  PATH_NEW_ARTICLE,
+  NOT_FOUND,
+} from '../routes'
 
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
@@ -19,6 +30,7 @@ import Edit from './Edit/Edit'
 
 function App() {
   const dispatch = useDispatch()
+
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
     const currentPage = sessionStorage.getItem('currentPage')
@@ -41,12 +53,12 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path={PATH_HOME} element={<Layout />}>
         <Route index element={<PostList />} />
-        <Route path="articles" element={<PostList />} />
-        <Route path="articles/:slug" element={<Slug />} />
+        <Route path={PATH_ARTICLE} element={<PostList />} />
+        <Route path={PATH_SLUG} element={<Slug />} />
         <Route
-          path="articles/:slug/edit"
+          path={PATH_SLUG_EDIT}
           element={
             <PrivateRoute>
               <Edit />
@@ -54,7 +66,7 @@ function App() {
           }
         />
         <Route
-          path="/sign-in"
+          path={PATH_SIGN_IN}
           element={
             <PublicRoute>
               <SignIn />
@@ -62,7 +74,7 @@ function App() {
           }
         />
         <Route
-          path="/sign-up"
+          path={PATH_SIGN_UP}
           element={
             <PublicRoute>
               <SignUp />
@@ -70,7 +82,7 @@ function App() {
           }
         />
         <Route
-          path="/profile"
+          path={PATH_PROFILE}
           element={
             <PrivateRoute>
               <Profile />
@@ -78,14 +90,14 @@ function App() {
           }
         />
         <Route
-          path="/new-article"
+          path={PATH_NEW_ARTICLE}
           element={
             <PrivateRoute>
               <Create />
             </PrivateRoute>
           }
         />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path={NOT_FOUND} element={<NotFoundPage />} />
       </Route>
     </Routes>
   )

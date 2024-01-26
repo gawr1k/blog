@@ -2,11 +2,13 @@ import React from 'react'
 import { Button, Result } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
+import { PATH_HOME } from '../../routes'
+
 function NotFound() {
   const navigate = useNavigate()
 
   const handleRedirect = () => {
-    navigate('/')
+    navigate(PATH_HOME)
   }
 
   return (

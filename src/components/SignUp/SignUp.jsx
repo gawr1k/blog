@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button, Checkbox } from 'antd'
 import { useDispatch } from 'react-redux'
 
+import { PATH_SIGN_IN } from '../../routes'
 import { registerUser } from '../../store/slices/loginSlice'
 
 import style from './SignUp.module.scss'
@@ -115,7 +116,7 @@ function SignUp() {
       </Button>
       <h5 className={style.link}>
         Already have an account?
-        <Link to="/sign-in" className={style.link__sign}>
+        <Link to={PATH_SIGN_IN} className={style.link__sign}>
           Sign In
         </Link>
       </h5>
