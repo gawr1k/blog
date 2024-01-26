@@ -140,11 +140,13 @@ export default function Slug() {
               </div>
             )}
           </div>
-          {article.tagList?.map((tag, index) => (
-            <span key={`tag-${index}`} className={style.tag}>
-              {tag}
-            </span>
-          )) || []}
+          <div className={style.container_taglist}>
+            {article.tagList?.map((tag, index) => (
+              <span key={`tag-${index}`} className={style.tag}>
+                {tag}
+              </span>
+            )) || []}
+          </div>
           <p className={style.description}>{article.description}</p>
           <div className={style.body}>
             <ReactMarkdown>{article.body}</ReactMarkdown>

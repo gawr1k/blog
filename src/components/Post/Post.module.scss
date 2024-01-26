@@ -158,3 +158,10 @@
   opacity: 0;
   position: absolute;
 }
+
+.container_taglist {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 20px;
+  overflow: hidden;
+}

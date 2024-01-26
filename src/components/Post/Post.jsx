@@ -79,11 +79,13 @@ export default function Post({ post }) {
               </div>
             )}
           </div>
-          {post.tagList.map((tag, index) => (
-            <span key={`tag-${index}`} className={style.tag}>
-              {tag}
-            </span>
-          ))}
+          <div className={style.container_taglist}>
+            {post.tagList.map((tag, index) => (
+              <span key={`tag-${index}`} className={style.tag}>
+                {tag}
+              </span>
+            ))}
+          </div>
           <p className={style.text}>{post.description}</p>
         </div>
       </div>
