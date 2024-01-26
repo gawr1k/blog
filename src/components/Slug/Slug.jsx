@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { Spin, Button, Popconfirm } from 'antd'
 
+import avatar from '../../assets/smiley-cyrus.jpg'
 import ResultErr from '../ResultErr/ResultErr'
 import useAuth from '../../hooks/use-auth'
 import {
@@ -30,6 +31,7 @@ export default function Slug() {
   const status = useSelector(selectStatus)
   const error = useSelector(selectError)
   const loading = useSelector(selectLoadingArticle)
+  const [imgError, setImgError] = useState(false)
 
   const { slug } = useParams()
   const { isAuth, token, username } = useAuth()
@@ -95,6 +97,10 @@ export default function Slug() {
     }
   }
 
+  const handleImgError = () => {
+    setImgError(true)
+  }
+
   return loading ? (
     <Spin tip="Loading" size="large">
       <div className="content" />
@@ -151,11 +157,16 @@ export default function Slug() {
                 }).format(new Date(article.createdAt))}
             </h5>
           </div>
-          <img
-            className={style.avatar}
-            src={article.author?.image}
-            alt="Author Avatar"
-          />
+          {imgError ? (
+            <img className={style.avatar} src={avatar} alt="Avatar" />
+          ) : (
+            <img
+              className={style.avatar}
+              src={article.author?.image}
+              onError={handleImgError}
+              alt="Author Avatar"
+            />
+          )}
         </div>
         {editable && (
           <div className={style.container__btn}>

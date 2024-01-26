@@ -6,6 +6,7 @@ import { addFavorite, removeFavorite } from '../../store/slices/articleSlice'
 import useAuth from '../../hooks/use-auth'
 import like from '../../assets/like__icon.svg'
 import activeLike from '../../assets/Heart_corazón 1.svg'
+import avatar from '../../assets/smiley-cyrus.jpg'
 
 import style from './Post.module.scss'
 
@@ -15,7 +16,7 @@ export default function Post({ post }) {
   const { isAuth, token } = useAuth()
   const dispatch = useDispatch()
   const likeIconSrc = liked ? activeLike : like
-
+  const [imgError, setImgError] = useState(false)
   const handleClick = () => {
     switch (liked) {
       case false:
@@ -40,6 +41,10 @@ export default function Post({ post }) {
   useEffect(() => {
     setLiked(post.favorited)
   }, [post.favorited])
+
+  const handleImgError = () => {
+    setImgError(true)
+  }
 
   return (
     <div className={style.post__container}>
@@ -89,11 +94,16 @@ export default function Post({ post }) {
             }).format(new Date(post.createdAt))}
           </h5>
         </div>
-        <img
-          className={style.avatar}
-          src={post.author.image}
-          alt="Author Avatar"
-        />
+        {imgError ? (
+          <img className={style.avatar} src={avatar} alt="Avatar" />
+        ) : (
+          <img
+            className={style.avatar}
+            src={post.author.image}
+            onError={handleImgError}
+            alt="Author Avatar"
+          />
+        )}
       </div>
     </div>
   )

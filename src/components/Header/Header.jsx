@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import avatar from '../../assets/smiley-cyrus.jpg'
@@ -16,6 +16,7 @@ export default function Header() {
   const { isAuth, username, token, image } = useAuth()
   const dispatch = useDispatch()
   const status = useSelector(selectStatus)
+  const [imgError, setImgError] = useState(false)
 
   const handleLogout = () => {
     dispatch(logoutUser())
@@ -25,6 +26,11 @@ export default function Header() {
       dispatch(fetchGetProfile({ username, token }))
     }
   }, [status, dispatch])
+
+  const handleImgError = () => {
+    setImgError(true)
+  }
+
   return (
     <header className={style.header}>
       <div className={style.header__container}>
@@ -63,11 +69,16 @@ export default function Header() {
             type="button"
           >
             <span className={style.username_span}>{username}</span>
-            <img
-              className={style.username_img}
-              src={image || avatar}
-              alt="avatar"
-            />
+            {imgError ? (
+              <img className={style.username_img} src={avatar} alt="Avatar" />
+            ) : (
+              <img
+                className={style.avatar}
+                src={image || avatar}
+                onError={handleImgError}
+                alt="Author Avatar"
+              />
+            )}
           </NavLink>
           <NavLink
             to="/articles"
