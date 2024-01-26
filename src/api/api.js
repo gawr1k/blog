@@ -48,24 +48,30 @@ export async function getArticle(slug, token = null) {
 }
 
 export async function postLoginUser(email, password) {
-  const url = new URL('users/login', BASE_URL)
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      user: {
-        email,
-        password,
+  try {
+    const url = new URL('users/login', BASE_URL)
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    }),
-  })
-  if (!response.ok) {
-    throw new Error(`Authentication failed: ${response.status}`)
+      body: JSON.stringify({
+        user: {
+          email,
+          password,
+        },
+      }),
+    })
+    if (!response.ok) {
+      throw new Error(`${response.status}`)
+    }
+    const data = await response.json()
+    message.success('Authorization was successful!')
+    return data
+  } catch (error) {
+    message.error(`Authentication failed: ${error.message}`)
+    throw error
   }
-  const data = await response.json()
-  return data
 }
 
 export async function putUserProfile(userData) {
@@ -104,7 +110,7 @@ export async function postRegisterUser(userData) {
     })
     if (!response.ok) {
       const errorData = await response.json()
-      throw new Error(errorData.errors.body[0])
+      throw new Error(errorData.errors.error.status)
     }
     const data = await response.json()
     message.success('Registration successful!')

@@ -22,13 +22,8 @@ const initialState = {
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async ({ email, password }) => {
-    try {
-      const user = await postLoginUser(email, password)
-      return user
-    } catch (error) {
-      message.error('Failed to log in. Please try again.')
-      throw error
-    }
+    const user = await postLoginUser(email, password)
+    return user
   }
 )
 
