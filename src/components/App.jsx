@@ -43,7 +43,6 @@ function App() {
         break
       default: {
         dispatch(setLoginUser(storedUser))
-        console.log(storedUser)
         break
       }
     }

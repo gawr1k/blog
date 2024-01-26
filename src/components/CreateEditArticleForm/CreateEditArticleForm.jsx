@@ -24,17 +24,20 @@ function CreateEditArticleForm({
     const newInputValues = [...inputValues]
     newInputValues[index] = value
     setInputValues(newInputValues)
+    form.setFieldsValue({ tagList: newInputValues })
   }
 
   const handleDeleteInput = (index) => {
     const newInputValues = [...inputValues]
     newInputValues.splice(index, 1)
     setInputValues(newInputValues)
+    form.setFieldsValue({ tagList: newInputValues })
   }
 
   const handleAddInput = () => {
-    setInputValues([...inputValues, ''])
-    form.setFieldsValue({ tagList: [...inputValues, ''] })
+    const newInputValues = [...inputValues, '']
+    setInputValues(newInputValues)
+    form.setFieldsValue({ tagList: newInputValues })
   }
 
   const onFinish = async (values) => {

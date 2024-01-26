@@ -116,7 +116,7 @@ export async function postRegisterUser(userData) {
     message.success('Registration successful!')
     return data
   } catch (error) {
-    message.error(`Registration failed: ${error.message}`)
+    message.error(`Registration failed: email/username ${error.message}`)
     throw error
   }
 }
@@ -198,7 +198,6 @@ export async function getProfile(token) {
       throw new Error(`Ошибка при получении профиля: ${response.status}`)
     }
     const data = await response.json()
-    console.log(data)
     return data.user
   } catch (error) {
     message.error(`Ошибка в getProfile: ${error.message}`)

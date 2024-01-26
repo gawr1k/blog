@@ -18,9 +18,6 @@ function Profile() {
   const username = useSelector(selectUserName)
   const email = useSelector(selectEmail)
   const image = useSelector(selectImageUser)
-  console.log(image)
-  console.log(token)
-  console.log(username)
 
   const {
     register,
