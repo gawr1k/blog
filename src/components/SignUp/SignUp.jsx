@@ -15,8 +15,12 @@ function SignUp() {
     control,
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm()
+
+  const password = watch('password')
+
   const onSubmit = (data) => {
     dispatch(registerUser(data))
   }
@@ -75,6 +79,7 @@ function SignUp() {
             required: true,
             minLength: 6,
             maxLength: 40,
+            validate: (value) => value === password,
           })}
           type="password"
           placeholder="Repeat Password"
