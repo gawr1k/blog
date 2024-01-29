@@ -16,7 +16,6 @@ function Edit() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const titleText = 'Edit article'
-
   const status = useSelector(selectStatusArticle)
   const article = useSelector(selectArticle)
   useEffect(() => {
